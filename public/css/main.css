@@ -1,0 +1,221 @@
+:root {
+  --main-color: #F3841B;
+  --secondary-color: #AC4A87;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+nav.navbar {
+  background-color: var(--main-color);
+}
+
+nav.navbar .navbar-brand {
+  color: #FFFFFF;
+}
+
+nav.navbar .navbar-brand:hover {
+  color: #FFFFFF;
+}
+
+main {
+  flex: 1;
+  position: relative;
+  overflow-y: auto;
+}
+
+footer {
+  display: flex;
+  justify-content: space-evenly;
+  flex-direction: row;
+  background: var(--main-color);
+  text-align: center;
+}
+
+footer > * {
+  flex: 1;
+  color: #FFF;
+  text-decoration: none;
+  background: none;
+  border: none;
+  outline: 0;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+footer a:hover {
+  color: #FFF;
+  text-decoration: none;
+}
+
+
+/* INFO */
+
+#intro {
+  padding: 25px;
+  font-size: 28px;
+  position: absolute;
+  padding: 25px;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  place-content: center;
+}
+
+#diagram-bg-image > img {
+  opacity: 0.8;
+}
+
+
+/* LOADING */
+@-webkit-keyframes animacion_infinito_rotacion {
+  from {
+    -webkit-transform: rotateY(0deg);
+            transform: rotateY(0deg);
+  }
+  to {
+    -webkit-transform: rotateY(360deg);
+            transform: rotateY(360deg);
+  }
+}
+@keyframes animacion_infinito_rotacion {
+  from {
+    -webkit-transform: rotateY(0deg);
+            transform: rotateY(0deg);
+  }
+  to {
+    -webkit-transform: rotateY(360deg);
+            transform: rotateY(360deg);
+  }
+}
+.animacion_infinito_rotacion {
+  -webkit-animation: animacion_infinito_rotacion 2s linear infinite;
+          animation: animacion_infinito_rotacion 2s linear infinite;
+}
+
+
+
+/* EDIT */
+
+.drophidden .dropdown-toggle::after {
+  content: none;
+}
+
+.edit-shape {
+  color: transparent;
+}
+
+.edit-shape textarea {
+  color: black;
+  border: 0;
+  background: none;
+  outline: 0;
+  position: absolute;
+  width: 100%;
+  height: 30px;
+  text-align: center;
+  resize: none;
+  overflow: hidden;
+}
+
+#add_shape {
+  position: absolute;
+  right: 25px;
+  bottom: 105px;
+  z-index: 2000;
+}
+
+#add_shape > button {
+  border-radius: 60px;
+  width: 60px;
+  height: 60px;
+  font-size: 25px;
+  outline: 0;
+}
+
+#trash {
+  display: none;
+  position: absolute;
+  left: 25px;
+  bottom: 105px;
+  z-index: 2000;
+  border-radius: 60px;
+  width: 60px;
+  height: 60px;
+  font-size: 25px;
+  outline: 0;
+}
+
+
+.shape {
+  color: #222;
+  touch-action: none;
+  user-select: none;
+  -webkit-transform: translate(0px, 0px);
+          transform: translate(0px, 0px);
+
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 10px 25px;
+  white-space: pre-line;
+
+  position: absolute;
+
+  z-index: 100;
+}
+
+#shape-container {
+  position: relative;
+  height: 5000px;
+}
+
+.shape-while {
+  align-items: flex-start;
+  z-index: 90;
+}
+
+.shape-if {
+  align-items: flex-start;
+  padding-top: 50px;
+  z-index: 90;
+}
+
+.shape-dowhile {
+  align-items: flex-end;
+  z-index: 90;
+}
+
+.shape-for {
+  justify-content: flex-start;
+  z-index: 90;
+}
+
+.shape-for.edit-shape textarea {
+  text-align: left;
+  height: 70px;
+}
+
+
+
+
+/* RUN */
+#console-container {
+  max-height: 100px;
+  overflow-y: auto;
+}
+#console-container > div {
+  min-height: 100px;
+  /*background-color: rgba(255, 255, 255, 0.9375);*/
+  background: #FAFAFA;
+}

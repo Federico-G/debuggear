@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang='es'>
+<head>
+	<meta charset='utf-8'>
+	<meta http-equiv='X-UA-Compatible' content='IE=edge' />
+	<meta name='viewport' content='width=device-width, initial-scale=1' />
+	<link rel='shortcut icon' href='favicon.ico' />
+	<title>Debuggear web</title>
+
+	<link rel="manifest" href="/manifest.json" />
+
+	<!-- favicons via: realfavicongenerator.net -->
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<link rel="manifest" href="/site.webmanifest">
+	<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#F3841B">
+	<meta name="apple-mobile-web-app-title" content="Debuggear">
+	<meta name="application-name" content="Debuggear">
+	<meta name="msapplication-TileColor" content="#FFFFFF">
+	<meta name="theme-color" content="#F3841B">
+
+	<!-- vendor -->
+	<link type='text/css' rel='stylesheet' href='css/font-awesome.min.css' />
+	<link type='text/css' rel='stylesheet' href='css/bootstrap.min.css' />
+
+	<!-- user -->
+	<link type='text/css' rel='stylesheet' href='css/main.css' />
+</head>
+<body>
+	<header role="banner">
+		<nav class="navbar navbar-expand-lg navbar-light">
+			<div class="container">
+				<span class="navbar-brand">
+					<img src="/image/white-icon.svg" width="32" />
+					Debuggear
+				</span>
+			</div>
+		</nav>
+	</header>
+	<main id='main' role='main'>
+		<div id='intro' style="position: absolute;"></div>
+		<div id='diagram-bg-image'></div>
+		<div id='shape-container'></div>
+	</main>
+	<div id='buttons'></div>
+	<div id='console-container'></div>
+	<footer></footer>
+	<div class="modal fade" id="symbol-table" tabindex="-1" aria-labelledby="symbol-table-label" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="symbol-table-label">Tabla de símbolos</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body"></div>
+			</div>
+		</div>
+	</div>
+
+	<!-- vendor -->
+	<script src='js/jquery.min.js'></script>
+	<script src='js/bootstrap.bundle.min.js'></script>
+	<script src='js/interact.min.js'></script>
+	<script src='js/compressor.min.js'></script>
+
+	<script src='js/tf.min.js'></script>	
+	<script src='js/tf-automl.min.js'></script>
+
+	<!-- user -->
+	<script src='js/main.js'></script>
+	<script src='js/interact-init.js'></script>
+	<script src='js/shape.js'></script>
+	<script src='js/menu.js'></script>
+	<script src='js/step.js'></script>
+	<script src='tf.js'></script>
+	<script src='js/code/code.js'></script>
+
+	<script type="text/javascript">
+		if ('serviceWorker' in navigator) {
+			window.addEventListener('load', function() {
+				navigator.serviceWorker.register('/sw.js');
+			});
+		}
+
+		$(function() {
+			dg.step.check();
+		});
+	</script>
+</body>
+</html>
