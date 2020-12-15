@@ -27,6 +27,8 @@ const resourcesToPrecache = [
 	'group1-shard2of2.bin'
 ];
 
+// TODO add other files
+
 self.addEventListener('install', event => {
 	event.waitUntil(
 		caches.open(cacheName).then(cache => cache.addAll(resourcesToPrecache))

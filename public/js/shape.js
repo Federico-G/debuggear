@@ -1,56 +1,56 @@
-var shape = {
+dg.shape = {
 
 	$currentSelected: null,
 
 	blocks: ["shape-while", "shape-dowhile", "shape-for", "shape-if"],
 
 	select: function(element) {
-		if (shape.$currentSelected) {
-			shape.$currentSelected.removeClass("shape-selected");
-			shape.$currentSelected.trigger("resize");
+		if (dg.shape.$currentSelected) {
+			dg.shape.$currentSelected.removeClass("shape-selected");
+			dg.shape.$currentSelected.trigger("resize");
 		}
-		shape.$currentSelected = $(element);
-		shape.$currentSelected.addClass("shape-selected");
-		shape.$currentSelected.trigger("resize");
+		dg.shape.$currentSelected = $(element);
+		dg.shape.$currentSelected.addClass("shape-selected");
+		dg.shape.$currentSelected.trigger("resize");
 		$("#trash").show();
 	},
 
 	deselect: function() {
-		if (shape.$currentSelected) {
-			shape.$currentSelected.removeClass("shape-selected");
-			shape.$currentSelected.trigger("resize");
+		if (dg.shape.$currentSelected) {
+			dg.shape.$currentSelected.removeClass("shape-selected");
+			dg.shape.$currentSelected.trigger("resize");
 		}
-		shape.$currentSelected = null;
+		dg.shape.$currentSelected = null;
 		$("#trash").hide();
 	},
 
 	removeSelected: function() {
-		if (shape.$currentSelected) {
-			var $shape = shape.$currentSelected;
-			shape.deselect();
+		if (dg.shape.$currentSelected) {
+			var $shape = dg.shape.$currentSelected;
+			dg.shape.deselect();
 			$shape.remove();
 		}
 	},
 
 	uinew: function(container, textShape) {
-		var last_shape = shape.getAll().pop();
+		var last_shape = dg.shape.getAll().pop();
 		var y = 20;
 		if (last_shape) {
 			y += $(last_shape).data("y") + $(last_shape).outerHeight();
 		}
 
 		var height = 45;
-		if (shape.blocks.includes(textShape)) {
+		if (dg.shape.blocks.includes(textShape)) {
 			height = 150;
 		}
 
 		var width = 150
-		if (shape.blocks.includes(textShape)) {
+		if (dg.shape.blocks.includes(textShape)) {
 			width = 300;
 		}
 
-		var newShape = shape.new(container, textShape, ($("body").width() - width) / 2, y, width, height, "Contenido");
-		shape.editText(newShape);
+		var newShape = dg.shape.new(container, textShape, ($("body").width() - width) / 2, y, width, height, "Contenido");
+		dg.shape.editText(newShape);
 	},
 
 	new: function(container, textShape, x, y, width, height, content) {
@@ -104,7 +104,7 @@ var shape = {
 
 	export_file: function() {
 		var element = document.createElement('a');
-		element.setAttribute('href', 'data:text/json;charset=utf-8,' + encodeURIComponent(shape.export()));
+		element.setAttribute('href', 'data:text/json;charset=utf-8,' + encodeURIComponent(dg.shape.export()));
 		element.setAttribute('download', "debuggear-diagram.json");
 
 		element.style.display = 'none';
@@ -148,17 +148,17 @@ var shape = {
 
 	import: function(data) {
 		var json = JSON.parse(data);
-		shape.clear();
+		dg.shape.clear();
 		var shape_container = document.getElementById("shape-container");
 		for (var i = 0; i < json.length; i++) {
 			var s = json[i];
-			shape.new(shape_container, s.shape, s.x, s.y, s.width, s.height, s.content);
+			dg.shape.new(shape_container, s.shape, s.x, s.y, s.width, s.height, s.content);
 		}
 	},
 
 	export: function() {
 		var json = [];
-		var shapes = shape.getAll();
+		var shapes = dg.shape.getAll();
 		var $shape;
 		for (var i = 0; i < shapes.length; i++) {
 			$shape = $(shapes[i]);
@@ -175,54 +175,64 @@ var shape = {
 		return JSON.stringify(json);
 	},
 
+	validateDiagram: function() {
+		// TODO validateDiagram
+		// https://elvex.ugr.es/decsai/c/apuntes/tokens.pdf
+		// TODO validate in with regex
+		// TODO validate out with regex and see if symbols were declarated, else: compilation error $variable undeclared
+		// file:///D:/Descargas/Elementos%20de%20programacion/Unidad-3---El-lenguaje-de-Programacion-C.pdf
+		// https://stackoverflow.com/questions/28241240/writing-regular-expressions-for-a-c-string
+		return false;
+	},
+
 	generateTriggers: function() {
 		// Could be avoided
-		$(window).off("resize", shape.generateSVG).on("resize", shape.generateSVG);
+		$(window).off("resize", dg.shape.generateSVG).on("resize", dg.shape.generateSVG);
 
 		$(".shape-in").off("resize").on("resize", function() {
-			shape.generateIN(this);
+			dg.shape.generateIN(this);
 		});
 		$(".shape-out").off("resize").on("resize", function() {
-			shape.generateOUT(this);
+			dg.shape.generateOUT(this);
 		});
 		$(".shape-op").off("resize").on("resize", function() {
-			shape.generateOP(this);
+			dg.shape.generateOP(this);
 		});
 		$(".shape-while").off("resize").on("resize", function() {
-			shape.generateWHILE(this);
+			dg.shape.generateWHILE(this);
 		});
 		$(".shape-dowhile").off("resize").on("resize", function() {
-			shape.generateDOWHILE(this);
+			dg.shape.generateDOWHILE(this);
 		});
 		$(".shape-for").off("resize").on("resize", function() {
-			shape.generateFOR(this);
+			dg.shape.generateFOR(this);
 		});
 		$(".shape-if").off("resize").on("resize", function() {
-			shape.generateIF(this);
+			dg.shape.generateIF(this);
 		});
 	},
 
 	generateSVG: function() {
 		$(".shape-in").each(function() {
-			shape.generateIN(this);
+			dg.shape.generateIN(this);
 		});
 		$(".shape-out").each(function() {
-			shape.generateOUT(this);
+			dg.shape.generateOUT(this);
 		});
 		$(".shape-op").each(function() {
-			shape.generateOP(this);
+			dg.shape.generateOP(this);
 		});
 		$(".shape-while").each(function() {
-			shape.generateWHILE(this);
+			dg.shape.generateWHILE(this);
 		});
 		$(".shape-dowhile").each(function() {
-			shape.generateDOWHILE(this);
+			dg.shape.generateDOWHILE(this);
 		});
 		$(".shape-for").each(function() {
-			shape.generateFOR(this);
+			dg.shape.generateFOR(this);
 		});
 		$(".shape-if").each(function() {
-			shape.generateIF(this);
+			dg.shape.generateIF(this);
 		});
 	},
 

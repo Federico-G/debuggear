@@ -78,14 +78,14 @@ dg.step = {
 
 
 		var div = document.getElementById("shape-container")
-		div.addEventListener('click', shape.deselect);
+		div.addEventListener('click', dg.shape.deselect);
 
-		shape.import(diagram);
+		dg.shape.import(diagram);
 
 
 		dg.menu.generarBGImage();
-		shape.generateTriggers();
-		shape.generateSVG();
+		dg.shape.generateTriggers();
+		dg.shape.generateSVG();
 		dg.menu.generarAgregarShape();
 		dg.menu.generarAgregarShapeTrash();
 		window.addEventListener('beforeunload', dg.menu.saveDiagram);
@@ -113,7 +113,7 @@ dg.step = {
 		var element, insideElement;
 		for (var i = 0; i < diagram.length; i++) {
 			element = diagram[i];
-			if (shape.blocks.indexOf(element.shape) !== -1) {
+			if (dg.shape.blocks.indexOf(element.shape) !== -1) {
 				for (var j = 0; j < diagram.length; j++) {
 					insideElement = diagram[j];
 					if (!insideElement.included && overlap(element, insideElement)) {
@@ -155,7 +155,7 @@ dg.step = {
 			var element, newNode;
 			for (var i = 0; i < elements.length; i++) {
 				element = elements[i];
-				var HTMLElement = shape.new(document.getElementById("shape-container"),
+				var HTMLElement = dg.shape.new(document.getElementById("shape-container"),
 					element.shape, element.x, element.y, element.width, element.height, element.content);
 				newNode = node.addNode(element.shape.substr(6), HTMLElement, element.content);
 				if (element.overlapped.length) {
@@ -169,8 +169,8 @@ dg.step = {
 		armar(elements, mainNode);
 		dg.menu.generarBGImage();
 		dg.menu.generarConsole();
-		shape.generateTriggers();
-		shape.generateSVG();
+		dg.shape.generateTriggers();
+		dg.shape.generateSVG();
 
 	}
 }

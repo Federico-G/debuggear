@@ -3,7 +3,7 @@ dg.menu = {
 		document.getElementById('intro').innerHTML = '';
 		document.getElementById("buttons").innerHTML = '';
 		document.getElementById("shape-container").innerHTML = '';
-		document.getElementById("shape-container").removeEventListener('click', shape.deselect);
+		document.getElementById("shape-container").removeEventListener('click', dg.shape.deselect);
 		document.getElementById("diagram-bg-image").innerHTML = '';
 		document.getElementById("console-container").innerHTML = '';
 		interact('.shape').unset();
@@ -12,7 +12,7 @@ dg.menu = {
 	},
 
 	saveDiagram: function() {
-		localStorage.setItem("diagram", shape.export());
+		localStorage.setItem("diagram", dg.shape.export());
 	},
 
 	generarFooter: function(opciones) {
@@ -137,7 +137,7 @@ dg.menu = {
 				var button = document.createElement('button');
 				button.type = 'button';
 				button.innerHTML = "<i class='fa fa-upload'></i><br><span>Importar diagrama</span>";
-				button.addEventListener('click', shape.import_file);
+				button.addEventListener('click', dg.shape.import_file);
 
 				footer.appendChild(button);
 			}
@@ -146,7 +146,7 @@ dg.menu = {
 				var button = document.createElement('button');
 				button.type = 'button';
 				button.innerHTML = "<i class='fa fa-download'></i><br><span>Exportar diagrama</span>";
-				button.addEventListener('click', shape.export_file);
+				button.addEventListener('click', dg.shape.export_file);
 
 				footer.appendChild(button);
 			}
@@ -157,7 +157,10 @@ dg.menu = {
 				button.innerHTML = "<i class='fa fa-play'></i><br><span>¡Ejecutar!</span>";
 				button.addEventListener('click', function() {
 					dg.menu.saveDiagram();
-					dg.step.generateCode();
+					var diagram_ok = dg.shape.validateDiagram();
+					if (diagram_ok) {
+						dg.step.generateCode();
+					}
 				});
 
 				footer.appendChild(button);
@@ -211,7 +214,7 @@ dg.menu = {
 				button.innerHTML = "<i class='fa fa-step-forward'></i><br><span>Siguiente</span>";
 				button.addEventListener('click', function() {
 					var node = dg.code.pg.nextStep();
-					shape.select(node.getElement());
+					dg.shape.select(node.getElement());
 					document.getElementById("console-container").innerHTML = 
 						"<div>" + dg.code.pg.currentConsole.getLines().join("<br>") + "</div>";
 					document.getElementById("console-container").firstChild.scrollIntoView(false);
@@ -226,7 +229,7 @@ dg.menu = {
 				button.innerHTML = "<i class='fa fa-step-backward'></i><br><span>Anteior</span>";
 				button.addEventListener('click', function() {
 					var node = dg.code.pg.prevStep();
-					shape.select(node.getElement());
+					dg.shape.select(node.getElement());
 					document.getElementById("console-container").innerHTML = 
 						"<div>" + dg.code.pg.currentConsole.getLines().join("<br>") + "</div>";
 					document.getElementById("console-container").firstChild.scrollIntoView(false);
@@ -293,7 +296,7 @@ dg.menu = {
 
 		var createFnUinew = function(s) {
 			return function(e) {
-				shape.uinew(document.getElementById("shape-container"), s);
+				dg.shape.uinew(document.getElementById("shape-container"), s);
 			};
 		};
 
@@ -319,7 +322,7 @@ dg.menu = {
 		button.setAttribute('class', 'btn btn-danger');
 		button.id = 'trash';
 		button.innerHTML = "<i class='fa fa-trash'></i>";
-		button.addEventListener('click', shape.removeSelected);
+		button.addEventListener('click', dg.shape.removeSelected);
 
 		document.getElementById("buttons").appendChild(button);
 	},

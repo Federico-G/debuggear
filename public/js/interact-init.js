@@ -73,11 +73,11 @@ function init_interact() {
     })
     .on('doubletap', function (event) {
       var target = event.currentTarget;
-      shape.editText(target);
+      dg.shape.editText(target);
     })
     .on('tap', function (event) {
       var target = event.currentTarget;
-      shape.select(target);
+      dg.shape.select(target);
     })
     .on('click', function(event) {
       event.stopPropagation();
