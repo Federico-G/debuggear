@@ -11,6 +11,6 @@ dg.code.SymbolTable.prototype.addSymbol = function(name, symbol) {
 
 dg.code.SymbolTable.prototype.clone = function() {
 	var st = new dg.code.SymbolTable;
-	st.table = Object.create(this.table);
+	st.table = $.extend(true, {}, this.table);
 	return st;
 }

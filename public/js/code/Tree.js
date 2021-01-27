@@ -22,7 +22,6 @@ dg.code.Tree.prototype.nextStep = function() {
 		that.currentNode = result;
 	});
 	return this.currentNode;
-
 }
 
 dg.code.Tree.prototype.prevStep = function() {
@@ -51,4 +50,29 @@ dg.code.Tree.prototype.setStep = function(stepNumber) {
 		this.currentSymbolTable = step.getSymbolTable();
 		return this.currentNode = step.getNode();
 	}
+}
+
+dg.code.Tree.prototype.fromCode = function(elements) {
+	function armar(elements, node) {
+		var element, newNode, HTMLElement;
+		for (var i = 0; i < elements.length; i++) {
+			element = elements[i];
+			HTMLElement = dg.shape.new(
+				document.getElementById("shape-container"),
+				element.shape, element.x, element.y, element.width, element.height, element.content
+			);
+			if (node.type == 'if') {
+				newNode = node.addNode(element.shape.substring(6), HTMLElement, element.content, {
+					"if": element.if
+				});
+			} else {
+				newNode = node.addNode(element.shape.substring(6), HTMLElement, element.content);
+			}
+			if (element.overlapped.length) {
+				armar(element.overlapped, newNode);
+			}
+		}
+	}
+
+	armar(elements, dg.code.pg.getMainNode());
 }

@@ -1,36 +1,106 @@
 dg.step = {
 	check: function() {
+		var screen = localStorage.getItem("screen");
 		var diagram = localStorage.getItem("diagram");
 		var code = localStorage.getItem("code");
-		if (!diagram) {
-			if (localStorage.getItem("notFirstTime")) {
-				dg.step.screen1();
+		if (screen === null) {
+			if (code) {
+				dg.step._screen3();
+			} else if (diagram) {
+				dg.step._screen2();
 			} else {
-				dg.step.screen0();
+				dg.step.screenInfo();
 			}
-		} else if (code) {
-			dg.step.screen3();
-		} else {
-			dg.step.screen2();
+		} else if (screen === "info") {
+			dg.step.screenInfo();
+		} else if (screen === "help") {
+			dg.step.screenHelp();
+		} else if (screen === "functions") {
+			dg.step.screenFunctions();
+		} else if (screen === "main") {
+			dg.step.screenMain();
 		}
 	},
 
 	// info
-	screen0: function() {
-		localStorage.setItem("notFirstTime", 1);
+	screenInfo: function() {
+		localStorage.setItem("screen", "info");
 		dg.menu.clean();
-		dg.menu.generarFooter(["new", "install"]);
+		dg.menu.generarFooter();
 		dg.menu.generarInfo();
 	},
 
+	screenHelp: function() {
+		localStorage.setItem("screen", "help");
+		dg.menu.clean();
+		dg.menu.generarFooter();
+		dg.menu.generarHelp();
+	},
+
+	screenFunctions: function() {
+		localStorage.setItem("screen", "functions");
+		dg.menu.clean();
+		dg.menu.generarFooter();
+		dg.menu.generarFunctions();
+	},
+
+	screenMain: function() {
+		var diagram = localStorage.getItem("diagram");
+		var code = localStorage.getItem("code");
+		if (code) {
+			dg.step._screen3();
+		} else if (diagram) {
+			dg.step._screen2();
+		} else {
+			dg.step._screen1();
+		}
+	},
+
 	// new
-	screen1: function() {
+	_screen1: function() {
 		localStorage.removeItem("diagram");
 		localStorage.removeItem("currentImage");
 		localStorage.removeItem("code");
+		localStorage.setItem("screen", "main");
 		dg.menu.clean();
-		dg.menu.generarFooter(["info", "scan_photo", "scan_image", "import_diagram", "from_scratch", "install"]);
+		dg.menu.generarFooter(["scan_photo", "scan_image", "import_diagram", "from_scratch"]);
 		dg.menu.generarCrear();
+	},
+
+	// edit
+	_screen2: function() {
+		localStorage.setItem("screen", "main");
+		dg.menu.clean();
+		dg.menu.generarFooter(["new", "export_diagram", "validate_and"]);
+
+		var diagram = localStorage.getItem("diagram");
+
+		var div = document.getElementById("shape-container")
+		div.addEventListener('click', dg.shape.deselect);
+
+		dg.shape.import(diagram);
+
+		dg.menu.generarBGImage();
+		dg.shape.generateTriggers();
+		dg.shape.generateSVG();
+		dg.menu.generarAgregarShape();
+		dg.menu.generarAgregarShapeTrash();
+		window.addEventListener('beforeunload', dg.menu.saveDiagram);
+		init_interact();
+	},
+
+	_screen3: function() {
+		localStorage.setItem("screen", "main");
+		dg.menu.clean();
+		dg.menu.generarFooter(["edit", "export_code", "show_symbol_table", "exe_prev", "exe_next"]);
+
+		dg.code.pg = new dg.code.Tree();
+		dg.code.pg.fromCode(JSON.parse(localStorage.getItem("code")));
+
+		dg.menu.generarBGImage();
+		// dg.menu.generarConsole();
+		dg.shape.generateTriggers();
+		dg.shape.generateSVG();
 	},
 
 	processImage: function(img, predictions) {
@@ -43,6 +113,8 @@ dg.step = {
 			};
 		});
 
+		var relation = img.width / dg.config.width;
+
 		$.ajax({
 			url: "https://us-central1-debuggear-web.cloudfunctions.net/recognizeText",
 			dataType: "json",
@@ -54,45 +126,57 @@ dg.step = {
 			for (var i = 0; i < predictions.length; i++) {
 				json_diagram.push({
 					shape: predictions[i].label,
-					x: predictions[i].box.left,
-					y: predictions[i].box.top,
-					width: predictions[i].box.width,
-					height: predictions[i].box.height,
+					x: predictions[i].box.left / relation,
+					y: predictions[i].box.top / relation,
+					width: predictions[i].box.width / relation,
+					height: predictions[i].box.height / relation,
 					content: json[i].text
 				});
 			}
 
 			localStorage.setItem("diagram", JSON.stringify(json_diagram));
-			dg.step.screen2();
+			dg.step._screen2();
 		});
-
-
 	},
 
-	// edit
-	screen2: function() {
-		dg.menu.clean();
-		dg.menu.generarFooter(["new", "export_diagram", "execute"]);
+	processFunction: function() {
+		var functions = JSON.parse(localStorage.getItem("functions") || "{}");
+		var diagram = JSON.parse(localStorage.getItem("diagram"));
 
-		var diagram = localStorage.getItem("diagram");
+		dg.grammar.ParserStart = "dgFUNCTION";
+		var parser = new nearley.Parser(nearley.Grammar.fromCompiled(dg.grammar));
+		parser.feed(diagram[0].content);
+		var parser_result = parser.results[0];
 
+		var language = dg.language.CodeToLanguage(dg.step._diagramToCode(diagram));
 
-		var div = document.getElementById("shape-container")
-		div.addEventListener('click', dg.shape.deselect);
+		var new_function = {
+			name: parser_result.functionName,
+			return_type: parser_result.returnType,
+			parameters: parser_result.parameters,
+			diagram: diagram,
+			language: language
+		};
 
-		dg.shape.import(diagram);
+		if (functions[new_function.name]) {
+			if (!confirm("Ya existe una función con ese nombre. ¿Desea sobrescribirla?")) {
+				return;
+			}
+		}
 
-
-		dg.menu.generarBGImage();
-		dg.shape.generateTriggers();
-		dg.shape.generateSVG();
-		dg.menu.generarAgregarShape();
-		dg.menu.generarAgregarShapeTrash();
-		window.addEventListener('beforeunload', dg.menu.saveDiagram);
-		init_interact();
+		functions[new_function.name] = new_function;
+		localStorage.setItem("functions", JSON.stringify(functions));
+		dg.step.screenFunctions();
 	},
 
 	generateCode: function() {
+		var diagram = JSON.parse(localStorage.getItem("diagram"));
+		var code = dg.step._diagramToCode(diagram);
+		localStorage.setItem("code", JSON.stringify(code));
+		dg.step._screen3();
+	},
+
+	_diagramToCode: function(diagram) {
 		function overlap(e1, e2) {
 			return (e2.x + e2.width) < (e1.x + e1.width) &&
 				e2.x > e1.x &&
@@ -100,8 +184,7 @@ dg.step = {
 				(e2.y + e2.height) < (e1.y + e1.height);
 		}
 
-		// Duplicate and sort by surface
-		var diagram = JSON.parse(localStorage.getItem("diagram"));
+		// Sort by surface
 		diagram.sort(function(a, b) {
 			return (a.width * a.height) - (b.width * b.height)
 		}).forEach(function(x, i) {
@@ -117,6 +200,9 @@ dg.step = {
 				for (var j = 0; j < diagram.length; j++) {
 					insideElement = diagram[j];
 					if (!insideElement.included && overlap(element, insideElement)) {
+						if (element.shape === 'shape-if') {
+							insideElement.if = (element.x + element.width / 2) > (insideElement.x + insideElement.width / 2) ? "true" : "false";
+						}
 						element.overlapped.push(insideElement);
 						element.overlapped.sort(function(a, b) {
 							return a.y - b.y;
@@ -134,43 +220,6 @@ dg.step = {
 			return a.y - b.y;
 		});
 
-		var code = JSON.stringify(diagram);
-
-		localStorage.setItem("code", code);
-		dg.step.screen3();
-	},
-
-	screen3: function() {
-		dg.menu.clean();
-
-		// TODO
-		//dg.menu.generarFooter(["new", "edit", "show_symbol_table" /* modal */, "export_ccode"]);
-		//  "exe_prev", "exe_next" -> opciones por fuera del footer. Pensar como
-		dg.menu.generarFooter(["new", "edit", "show_symbol_table", "exe_prev", "exe_next"]);
-
-		var elements = JSON.parse(localStorage.getItem("code"));
-
-		// Armar programa
-		function armar(elements, node) {
-			var element, newNode;
-			for (var i = 0; i < elements.length; i++) {
-				element = elements[i];
-				var HTMLElement = dg.shape.new(document.getElementById("shape-container"),
-					element.shape, element.x, element.y, element.width, element.height, element.content);
-				newNode = node.addNode(element.shape.substr(6), HTMLElement, element.content);
-				if (element.overlapped.length) {
-					armar(element.overlapped, newNode);
-				}
-			}
-		}
-
-		dg.code.pg = new dg.code.Tree();
-		var mainNode = dg.code.pg.getMainNode();
-		armar(elements, mainNode);
-		dg.menu.generarBGImage();
-		dg.menu.generarConsole();
-		dg.shape.generateTriggers();
-		dg.shape.generateSVG();
-
+		return diagram;
 	}
 }
