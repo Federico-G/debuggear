@@ -64,8 +64,7 @@ dg.language.valid_expression = {
 				} else if (statements[i].type == "expression") {
 					errors += dg.language.valid_expression._resolveExpression(statements[i]);
 				} else if (statements[i].type == "return") {
-					// XXX check if function???
-					errors += dg.language.valid_expression._resolveExpression(statements[i]);
+					errors += dg.language.valid_expression._resolveExpression([statements[i]]);
 				}
 			}
 		}

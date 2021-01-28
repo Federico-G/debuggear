@@ -3,6 +3,7 @@ dg.menu = {
 		document.getElementById('intro').innerHTML = '';
 		document.getElementById("buttons").innerHTML = '';
 		document.getElementById("shape-container").innerHTML = '';
+		document.getElementById("shape-container").style.display = 'none';
 		document.getElementById("shape-container").removeEventListener('click', dg.shape.deselect);
 		document.getElementById("diagram-bg-image").innerHTML = '';
 		document.getElementById("console-container").innerHTML = '';
@@ -436,6 +437,7 @@ dg.menu = {
 
 		localStorage.removeItem("code");
 		var fn = JSON.parse(localStorage.getItem("functions"))[name];
+		localStorage.removeItem("currentImage");
 		localStorage.setItem("diagram", JSON.stringify(fn.diagram));
 		localStorage.setItem("screen", "main");
 		dg.step.check();

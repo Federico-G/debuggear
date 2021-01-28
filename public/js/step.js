@@ -71,6 +71,7 @@ dg.step = {
 	_screen2: function() {
 		localStorage.setItem("screen", "main");
 		dg.menu.clean();
+		document.getElementById("shape-container").style.display = 'block';
 		dg.menu.generarFooter(["new", "export_diagram", "validate_and"]);
 
 		var diagram = localStorage.getItem("diagram");
@@ -92,6 +93,7 @@ dg.step = {
 	_screen3: function() {
 		localStorage.setItem("screen", "main");
 		dg.menu.clean();
+		document.getElementById("shape-container").style.display = 'block';
 		dg.menu.generarFooter(["edit", "export_code", "show_symbol_table", "exe_prev", "exe_next"]);
 
 		dg.code.pg = new dg.code.Tree();

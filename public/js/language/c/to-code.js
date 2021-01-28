@@ -88,7 +88,7 @@ dg.language.CodeToLanguage = function(elements, functions) {
 					if (parser_result.statements[i].type === "declaration") {
 						type = parser_result.statements[i].declarationType;
 						for (var j = 0; j < parser_result.statements[i].declarators.length; j++) {
-							variables[parser_result.statements[i].declarators[i].value] = type;
+							variables[parser_result.statements[i].declarators[j].value] = type;
 						}
 					}
 				}
