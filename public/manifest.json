@@ -13,9 +13,10 @@
 			"type": "image/png"
 		}
 	],
-	"start_url": "/index.html",
+	"start_url": "/",
 	"display": "standalone",
 	"orientation": "portrait",
 	"background_color": "#FFFFFF",
-	"theme_color": "#F3841B"
+	"theme_color": "#F3841B",
+	"categories": ["education", "productivity", "utilities"]
 }

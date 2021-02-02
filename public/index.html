@@ -6,6 +6,8 @@
 	<meta name='viewport' content='width=device-width, initial-scale=1' />
 	<link rel='shortcut icon' href='favicon.ico' />
 	<title>Debuggear web</title>
+	<meta name="title" content="Debuggear web">
+	<meta name="description" content="Description">
 
 	<link rel="manifest" href="/manifest.json" />
 
@@ -20,6 +22,13 @@
 	<meta name="msapplication-TileColor" content="#FFFFFF">
 	<meta name="theme-color" content="#F3841B">
 
+	<!-- Open Graph -->
+	<meta property="og:type" content="website">
+	<meta property="og:url" content="https://debuggear-web.web.app/">
+	<meta property="og:title" content="Debuggear web">
+	<meta property="og:description" content="Description">
+	<meta property="og:image" content="https://debuggear-web.web.app/android-chrome-512x512.png">
+
 	<!-- vendor -->
 	<link type='text/css' rel='stylesheet' href='css/font-awesome.min.css' />
 	<link type='text/css' rel='stylesheet' href='css/bootstrap.min.css' />
@@ -28,16 +37,42 @@
 	<link type='text/css' rel='stylesheet' href='css/main.css' />
 </head>
 <body>
-	<header role="banner">
-		<nav class="navbar navbar-expand-lg navbar-light">
+	<header role="banner" style="z-index: 1002;">
+		<nav class="navbar navbar-expand-lg navbar-dark main-color">
 			<div class="container">
 				<span class="navbar-brand">
 					<img src="/image/white-icon.svg" width="32" />
 					Debuggear
 				</span>
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarSupportedContent">
+					<ul class="navbar-nav">
+						<li class="nav-item">
+							<a class="nav-link" href="#" onclick="dg.step.screenMain(); $('.navbar-collapse').collapse('hide'); return false;">Diagrama</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="#" onclick="dg.step.screenInfo(); $('.navbar-collapse').collapse('hide'); return false;">Info</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="#" onclick="dg.step.screenHelp(); $('.navbar-collapse').collapse('hide'); return false;">Ayuda</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="#" onclick="dg.step.screenFunctions(); $('.navbar-collapse').collapse('hide'); return false;">Funciones</a>
+						</li>
+						<li class="nav-item" style="display: none;">
+							<a class="nav-link" href="#" id="instalar"><i class='fa fa-mobile'></i> <span>Instalar</span></a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link disabled" href="#"><span id="version"></span></a>
+						</li>
+					</ul>
+				</div>
 			</div>
 		</nav>
 	</header>
+
 	<main id='main' role='main'>
 		<div id='intro' style="position: absolute;"></div>
 		<div id='diagram-bg-image'></div>
@@ -45,7 +80,7 @@
 	</main>
 	<div id='buttons'></div>
 	<div id='console-container'></div>
-	<footer></footer>
+	<footer class="main-color"></footer>
 	<div class="modal fade" id="symbol-table" tabindex="-1" aria-labelledby="symbol-table-label" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
@@ -60,11 +95,16 @@
 		</div>
 	</div>
 
+	<!-- Google ads -->
+	<script data-ad-client="ca-pub-1993499454382682" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
 	<!-- vendor -->
 	<script src='js/jquery.min.js'></script>
 	<script src='js/bootstrap.bundle.min.js'></script>
 	<script src='js/interact.min.js'></script>
 	<script src='js/compressor.min.js'></script>
+
+	<script src='js/nearley.js'></script>
 
 	<script src='js/tf.min.js'></script>	
 	<script src='js/tf-automl.min.js'></script>
@@ -76,18 +116,17 @@
 	<script src='js/menu.js'></script>
 	<script src='js/step.js'></script>
 	<script src='tf.js'></script>
-	<script src='js/code/code.js'></script>
 
-	<script type="text/javascript">
-		if ('serviceWorker' in navigator) {
-			window.addEventListener('load', function() {
-				navigator.serviceWorker.register('/sw.js');
-			});
-		}
+	<script src='js/code/Console.js'></script>
+	<script src='js/code/Node.js'></script>
+	<script src='js/code/Step.js'></script>
+	<script src='js/code/Symbol.js'></script>
+	<script src='js/code/SymbolTable.js'></script>
+	<script src='js/code/Tree.js'></script>
 
-		$(function() {
-			dg.step.check();
-		});
-	</script>
+	<script src='js/language/c/bnf.js'></script>
+	<script src='js/language/c/validation.js'></script>
+	<script src='js/language/c/solver.js'></script>
+	<script src='js/language/c/to-code.js'></script>
 </body>
 </html>
