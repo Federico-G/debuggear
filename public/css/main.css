@@ -14,8 +14,12 @@ body {
   flex-direction: column;
 }
 
-nav.navbar {
+.main-color {
   background-color: var(--main-color);
+}
+
+.sql-color {
+  background-color: var(--secondary-color);
 }
 
 #version {
@@ -33,7 +37,6 @@ footer {
   display: flex;
   justify-content: space-evenly;
   flex-direction: row;
-  background: var(--main-color);
   text-align: center;
 }
 

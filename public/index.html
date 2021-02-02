@@ -6,6 +6,8 @@
 	<meta name='viewport' content='width=device-width, initial-scale=1' />
 	<link rel='shortcut icon' href='favicon.ico' />
 	<title>Debuggear web</title>
+	<meta name="title" content="Debuggear web">
+	<meta name="description" content="Description">
 
 	<link rel="manifest" href="/manifest.json" />
 
@@ -20,6 +22,13 @@
 	<meta name="msapplication-TileColor" content="#FFFFFF">
 	<meta name="theme-color" content="#F3841B">
 
+	<!-- Open Graph -->
+	<meta property="og:type" content="website">
+	<meta property="og:url" content="https://debuggear-web.web.app/">
+	<meta property="og:title" content="Debuggear web">
+	<meta property="og:description" content="Description">
+	<meta property="og:image" content="https://debuggear-web.web.app/android-chrome-512x512.png">
+
 	<!-- vendor -->
 	<link type='text/css' rel='stylesheet' href='css/font-awesome.min.css' />
 	<link type='text/css' rel='stylesheet' href='css/bootstrap.min.css' />
@@ -29,7 +38,7 @@
 </head>
 <body>
 	<header role="banner" style="z-index: 1002;">
-		<nav class="navbar navbar-expand-lg navbar-dark">
+		<nav class="navbar navbar-expand-lg navbar-dark main-color">
 			<div class="container">
 				<span class="navbar-brand">
 					<img src="/image/white-icon.svg" width="32" />
@@ -71,7 +80,7 @@
 	</main>
 	<div id='buttons'></div>
 	<div id='console-container'></div>
-	<footer></footer>
+	<footer class="main-color"></footer>
 	<div class="modal fade" id="symbol-table" tabindex="-1" aria-labelledby="symbol-table-label" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
