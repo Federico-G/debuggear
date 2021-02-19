@@ -6,13 +6,21 @@ dg.shape = {
 
 	flags: ["shape-start", "shape-end"],
 
+	isBlock: function(x) {
+		return dg.shape.blocks.indexOf(x) !== -1;
+	},
+
+	isFlag: function(x) {
+		return dg.shape.flags.indexOf(x) !== -1;
+	},
+
 	select: function(element) {
-		if (dg.shape.$currentSelected) {
-			dg.shape.$currentSelected.removeClass("shape-selected");
-			dg.shape.$currentSelected.trigger("resize");
-		}
+		dg.shape.deselect();
 		dg.shape.$currentSelected = $(element);
 		dg.shape.$currentSelected.addClass("shape-selected");
+		if (dg.shape.$currentSelected.hasClass("shape-error")) {
+			dg.shape.$currentSelected.popover("show");
+		}
 		dg.shape.$currentSelected.trigger("resize");
 		$("#trash").show();
 	},
@@ -20,6 +28,7 @@ dg.shape = {
 	deselect: function() {
 		if (dg.shape.$currentSelected) {
 			dg.shape.$currentSelected.removeClass("shape-selected");
+			dg.shape.$currentSelected.popover("hide");
 			dg.shape.$currentSelected.trigger("resize");
 		}
 		dg.shape.$currentSelected = null;
@@ -43,7 +52,7 @@ dg.shape = {
 		//}
 
 		var height = 90;
-		if (dg.shape.blocks.includes(textShape)) {
+		if (dg.shape.isBlock(textShape)) {
 			height = 400;
 		} else if (dg.shape.flags.includes(textShape)) {
 			height = 70;
@@ -52,7 +61,7 @@ dg.shape = {
 		}
 
 		var width = 400
-		if (dg.shape.blocks.includes(textShape)) {
+		if (dg.shape.isBlock(textShape)) {
 			width = 700;
 		} else if (dg.shape.flags.includes(textShape)) {
 			width = 70;
@@ -229,6 +238,11 @@ dg.shape = {
 	validateDiagram: function() {
 		var shapes = dg.shape.getAll();
 
+		if (!shapes.length) {
+			alert("El diagrama esta vacio")
+			return false;
+		}
+
 		dg.shape.cleanErrorPopovers(shapes);
 
 		var errors = false;
@@ -287,9 +301,13 @@ dg.shape = {
 		shape.classList.add("shape-error");
 		shape.dataset.content = error;
 		$(shape).popover({
-			container: '#main'
+			container: '#main',
+			placement: 'bottom',
+			trigger: 'manual'
 		});
-		$(shape).popover("show");
+		if(shape.classList.contains("shape-selected")) {
+			$(shape).popover("show");
+		}
 		// TODO
 		// if field changedm, remove shapeerror and all datas and js init
 	},
@@ -383,8 +401,8 @@ dg.shape = {
 		var fillOpacity = "0.8";
 		var path = `
 			M ${stroke}, ${bounds.height / 2}
-			A 1 1 0 0 0 ${bounds.width - stroke}, ${bounds.height / 2}
-			A 1 1 0 0 0 ${stroke}, ${bounds.height / 2}
+			A 1 ${bounds.height / bounds.width} 0 0 0 ${bounds.width - stroke}, ${bounds.height / 2}
+			A 1 ${bounds.height / bounds.width} 0 0 0 ${stroke}, ${bounds.height / 2}
 			`;
 
 		var svg =
@@ -427,11 +445,20 @@ dg.shape = {
 		var stroke = 2;
 		var fillColor = dg.shape._generateFillColor($element);
 		var fillOpacity = "0.8";
+		var xr = bounds.width - Math.min(stroke + bounds.height / 4, bounds.width / 2);
+		var xl = Math.min(bounds.height / 4 + stroke, bounds.width / 2);
+		var xm = (xl + xr) / 2;
+		if (xl > xm - 5) {
+			xl = xm - 5;
+		}
+		if (xr < xm + 5) {
+			xr = xm + 5;
+		}
 		var path = `
 			M ${stroke}, ${stroke}
 			L ${bounds.width - stroke}, ${stroke}
-			L ${bounds.width - Math.min(stroke + bounds.height / 4, bounds.width / 2)}, ${bounds.height - stroke}
-			L ${Math.min(bounds.height / 4 + stroke, bounds.width / 2)}, ${bounds.height - stroke}
+			L ${xr}, ${bounds.height - stroke}
+			L ${xl}, ${bounds.height - stroke}
 			L ${stroke}, ${stroke}
 			L ${bounds.width - stroke}, ${stroke}
 			`;
@@ -452,13 +479,22 @@ dg.shape = {
 		var stroke = 2;
 		var fillColor = dg.shape._generateFillColor($element);
 		var fillOpacity = "0.8";
+		var xr = bounds.width - Math.min(stroke + bounds.height / 4, bounds.width / 2);
+		var xl = Math.min(bounds.height / 4 + stroke, bounds.width / 2);
+		var xm = (xl + xr) / 2;
+		if (xl > xm - 5) {
+			xl = xm - 5;
+		}
+		if (xr < xm + 5) {
+			xr = xm + 5;
+		}
 		var path = `
-			M ${bounds.width - Math.min(stroke + bounds.height / 4, bounds.width / 2)}, ${stroke}
-			L ${Math.min(bounds.height / 4 + stroke, bounds.width / 2)}, ${stroke}
+			M ${xr}, ${stroke}
+			L ${xl}, ${stroke}
 			L ${stroke}, ${bounds.height - stroke}
 			L ${bounds.width - stroke}, ${bounds.height - stroke}
-			L ${bounds.width - Math.min(stroke + bounds.height / 4, bounds.width / 2)}, ${stroke}
-			L ${Math.min(bounds.height / 4 + stroke, bounds.width / 2)}, ${stroke}
+			L ${xr}, ${stroke}
+			L ${xl}, ${stroke}
 			`;
 
 		var svg =

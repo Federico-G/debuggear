@@ -1,5 +1,5 @@
 window.dg = {
-	version: "v1.0.0-alpha1",
+	version: "v1.0.0-alpha2",
 	config: {
 		width: 1000,
 		_fontSize: 0,

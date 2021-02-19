@@ -179,8 +179,8 @@ postfixExpression-> primaryExpression                               {% d => d[0]
     | postfixExpression _ "[" _ expression _ "]"                    {% d => ({identifiers: bnf_join_id(d[0], d[4]) }) %}
     | postfixExpression _ "(" _ expression _ ")"                    {% d => ({identifiers: bnf_join_id(d[0], d[4]) }) %}
     | postfixExpression _ "(" _ ")"                                 {% d => d[0] %}
-    | identifier _ "++"                                             {% d => d[0] %}
-    | identifier _ "--"                                             {% d => d[0] %}
+    | identifier _ "++"                                             {% d => ({identifiers: [d[0]]}) %}
+    | identifier _ "--"                                             {% d => ({identifiers: [d[0]]}) %}
 
 primaryExpression -> identifier                                     {% d => ({identifiers: [d[0]]}) %}
     | constant

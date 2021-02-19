@@ -23,6 +23,7 @@ dg.menu = {
 		}
 		var footer = document.createElement('footer');
 		footer.innerHTML = "";
+		footer.classList.add("main-color");
 		var opcion;
 		for (var i = 0; i < opciones.length; i++) {
 			opcion = opciones[i];
@@ -167,16 +168,18 @@ dg.menu = {
 					dg.menu.saveDiagram();
 					var diagram_ok = dg.shape.validateDiagram();
 					if (diagram_ok) {
-						var isfunction = dg.shape.getAll()[0].classList.contains("shape-function");
-						var message = "El diagrama fue validado correctamente. " + (isfunction ? "¿Desea guardar esta funcion de usuario?" : "¿Desea ejecutarlo?");
-						var next = confirm(message);
-						if (next) {
-							if (isfunction) {
-								dg.step.processFunction();
-							} else {
-								dg.step.generateCode();
+						setTimeout(function() {
+							var isfunction = dg.shape.getAll()[0].classList.contains("shape-function");
+							var message = "El diagrama fue validado correctamente. " + (isfunction ? "¿Desea guardar esta funcion de usuario?" : "¿Desea ejecutarlo?");
+							var next = confirm(message);
+							if (next) {
+								if (isfunction) {
+									dg.step.processFunction();
+								} else {
+									dg.step.generateCode();
+								}
 							}
-						}
+						}, 0); 
 					}
 				});
 
@@ -407,7 +410,7 @@ dg.menu = {
 		var html = "<h1>Funciones creadas</h1><br>";
 
 		if (localFunctions) {
-			var table = "<table class='table table-striped table-bordered'><thead><tr><th>Retorno</th><th>Nombre</th><th>Parametros</th><th>Opciones</th></tr></thead><tbody>";
+			var table = "<table class='table table-striped table-bordered table-sm' style='font-size: 18px;'><thead><tr><th>Retorno</th><th>Nombre</th><th>Parametros</th><th>Opciones</th></tr></thead><tbody>";
 			var fn;
 			for (var name in localFunctions) {
 				fn = localFunctions[name];
@@ -416,8 +419,8 @@ dg.menu = {
 				table += "<td>" + fn.name + "</td>";
 				table += "<td>" + fn.parameters.map(x => x.dataType + " " + x.identifier).reverse().join(", ") + "</td>";
 				table += "<td>" +
-					"<button type='button' class='btn btn-secondary' onclick='dg.menu.editarFunction(\"" + fn.name + "\");'>Editar</button>" +
-					"<button type='button' class='btn btn-danger'onclick='dg.menu.borrarFunction(\"" + fn.name + "\");'>Borrar</button>" +
+					"<button type='button' class='btn btn-sm m-1 btn-secondary' onclick='dg.menu.editarFunction(\"" + fn.name + "\");'>Editar</button>" +
+					"<button type='button' class='btn btn-sm m-1 btn-danger'onclick='dg.menu.borrarFunction(\"" + fn.name + "\");'>Borrar</button>" +
 					"</td>";
 			}
 			table += "</tbody></table>";

@@ -62,7 +62,7 @@ dg.language.CodeToLanguage = function(elements, functions) {
 					}
 				}
 
-				return ["printf(\"" + retornar + "\"" + (extras.length > 1 ? extras.join(", ") : "") + ");"];
+				return ["printf(\"" + retornar + "\\n\"" + (extras.length > 1 ? extras.join(", ") : "") + ");"];
 
 			case "WHILE":
 				parser_result = _parse(stype, content);
@@ -74,7 +74,7 @@ dg.language.CodeToLanguage = function(elements, functions) {
 
 			case "DOWHILE":
 				parser_result = _parse(stype, content);
-				return ["do\n", "while (" + content + ");\n"];
+				return ["do", "while (" + content + ");\n"];
 
 			case "IF":
 				parser_result = _parse(stype, content);

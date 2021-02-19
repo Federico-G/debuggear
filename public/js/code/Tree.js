@@ -29,8 +29,7 @@ dg.code.Tree.prototype.prevStep = function() {
 		var step = this.history.pop();
 		this.currentSymbolTable = step.getSymbolTable();
 		this.currentConsole = step.getConsole();
-		this.currentNode = step.getNode();
-		return this.history.length ? this.history[this.history.length - 1].getNode() : null;
+		return this.currentNode = step.getNode();
 	}
 	return null;
 }
