@@ -1,30 +1,34 @@
 dg.menu = {
 	clean: function() {
 		document.getElementById('intro').innerHTML = '';
-		document.getElementById("buttons").innerHTML = '';
-		document.getElementById("diagram-bg-image").innerHTML = '';
-		document.getElementById("console-container").innerHTML = '';
-		interact('.shape').unset();
 		delete dg.sql.db;
 	},
-
+//"scan_photo_table", "scan_image_table", "scan_photo_query", "scan_image_query", "generate_table", "execute", "edit", "export_result_table", "show_query?", "exe_prev", "exe_next"
 	generarFooter: function(opciones) {
 		if (!opciones) {
 			opciones = [];
 		}
 		var footer = document.createElement('footer');
 		footer.innerHTML = "";
+		footer.classList.add("sql-color");
 		var opcion;
+
+		function scan(callback) {
+			return function(e) {
+				
+			}
+		}
+
 		for (var i = 0; i < opciones.length; i++) {
 			opcion = opciones[i];
 
-			if (opcion === 'new') {
+			if (opcion === 'back_to_tables') {
 				var button = document.createElement('button');
 				button.type = 'button';
-				button.innerHTML = "<i class='fa fa-plus'></i><br><span>Nuevo</span>";
+				button.innerHTML = "<i class='fa fa-arrow-left'></i><br><span>Volver</span>";
 				button.addEventListener('click', function(e) {
 					if (confirm("Todos sus cambios se perderan. ¿Desea continuar?")) {
-						dg.step._screen1();
+						dg.step.screenTables();
 					}
 				});
 
