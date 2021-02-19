@@ -1,12 +1,16 @@
-const cacheName = 'Cache v1.0.0-alpha1';
+const cacheName = 'Cache v1.0.0-alpha2';
 const resourcesToPrecache = [
 	'/',
 	'index.html',
 	'favicon.ico',
+
 	'dict.txt',
 	'model.json',
-	'group1-shard1of2.bin',
-	'group1-shard2of2.bin',
+	'group1-shard1of5.bin',
+	'group1-shard2of5.bin',
+	'group1-shard3of5.bin',
+	'group1-shard4of5.bin',
+	'group1-shard5of5.bin',
 
 	'css/font-awesome.min.css',
 	'css/bootstrap.min.css',
@@ -17,6 +21,7 @@ const resourcesToPrecache = [
 	'js/interact.min.js',
 	'js/interact-init.js',
 	'js/jquery.min.js',
+	'js/lodash.min.js',
 	'js/main.js',
 	'js/menu.js',
 	'js/nearley.js',

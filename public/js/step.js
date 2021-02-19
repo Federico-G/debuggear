@@ -107,11 +107,29 @@ dg.step = {
 
 	processImage: function(img, predictions) {
 		var pred_format = predictions.map(function(p) {
+			var x = p.box.left;
+			var y = p.box.top;
+			var width = p.box.width;
+			var height = p.box.height;
+			switch (p.label) {
+				case 'shape-dowhile':
+					width = (img.width - p.box.left);
+					height = 100;
+					y = p.box.top + p.box.height - height;
+					break;
+				case 'shape-while':
+					width = (img.width - p.box.left);
+					height = 100;
+					break;
+				case 'shape-if':
+					height = 150;
+					break;
+			}
 			return {
-				x: p.box.left,
-				y: p.box.top,
-				width: p.box.width,
-				height: p.box.height
+				x: x,
+				y: y,
+				width: width,
+				height: height
 			};
 		});
 
@@ -121,18 +139,33 @@ dg.step = {
 			url: "https://us-central1-debuggear-web.cloudfunctions.net/recognizeText",
 			dataType: "json",
 			method: "post",
-			data: JSON.stringify({image: img.src, bounds: pred_format}),
+			data: JSON.stringify({
+				image: img.src,
+				bounds: pred_format
+			}),
 			contentType: "text/plain; charset=utf-8"
 		}).done(function(json) {
-			var json_diagram = [];
+			var json_diagram = [],
+				p,
+				content;
 			for (var i = 0; i < predictions.length; i++) {
+				p = predictions[i];
+				content = json[i].text;
+				if (!content && dg.shape.isFlag(p.label)) {
+					if (p.label === "shape-start") {
+						content = "C";
+					} else if (p.label === "shape-end") {
+						content = "F";
+					}
+				}
 				json_diagram.push({
-					shape: predictions[i].label,
-					x: predictions[i].box.left / relation,
-					y: predictions[i].box.top / relation,
-					width: predictions[i].box.width / relation,
-					height: predictions[i].box.height / relation,
-					content: json[i].text
+					shape: p.label,
+					x: p.box.left / relation,
+					y: p.box.top / relation,
+					width: ["shape-for", "shape-while", "shape-dowhile"].includes(p.label) ?
+						((img.width - p.box.left * 1.8) / relation) : (p.box.width / relation),
+					height: p.box.height / relation,
+					content: content
 				});
 			}
 
@@ -198,12 +231,13 @@ dg.step = {
 		var element, insideElement;
 		for (var i = 0; i < diagram.length; i++) {
 			element = diagram[i];
-			if (dg.shape.blocks.indexOf(element.shape) !== -1) {
+			if (dg.shape.isBlock(element.shape) !== -1) {
 				for (var j = 0; j < diagram.length; j++) {
 					insideElement = diagram[j];
 					if (!insideElement.included && overlap(element, insideElement)) {
 						if (element.shape === 'shape-if') {
-							insideElement.if = (element.x + element.width / 2) > (insideElement.x + insideElement.width / 2) ? "true" : "false";
+							insideElement.if = (element.x + element.width / 2) >
+								(insideElement.x + insideElement.width / 2) ? "true" : "false";
 						}
 						element.overlapped.push(insideElement);
 						element.overlapped.sort(function(a, b) {

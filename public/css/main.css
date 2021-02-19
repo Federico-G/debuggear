@@ -22,6 +22,16 @@ body {
   background-color: var(--secondary-color);
 }
 
+.main-text-color {
+  color: var(--main-color) !important;
+  font-weight: bold;
+}
+
+.sql-text-color {
+  color: var(--secondary-color) !important;
+  font-weight: bold;
+}
+
 #version {
   font-size: 10px;
   color: #DCB;
@@ -64,10 +74,12 @@ footer a:hover {
 /* INFO */
 
 #intro {
-  padding: 25px;
+  margin-top: 25px;
+  margin-bottom: 25px;
+  padding-right: 25px;
+  padding-left: 25px;
   font-size: 28px;
   position: absolute;
-  padding: 25px;
   /*height: 100%;*/
   width: 100%;
   display: flex;
