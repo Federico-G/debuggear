@@ -398,7 +398,10 @@ dg.menu = {
 
 
 	generarInfo: function() {
-		document.getElementById('intro').innerHTML = '<h1>¡Holis!</h1><br>Proximamente aquí podrá encontrar información de los autores de la aplicación, y como poder contribuir para mejorarla';
+		var html = "<h1 class='mb-3'>Información</h1><p>Proximamente aquí podrá encontrar información de los autores de la aplicación, y como poder contribuir para mejorarla</p>";
+
+		html += "<p>Para comenzar a escanear acceda a la sección <a href='#' onclick='dg.step.screenMain(); return false;'>Diagrama</a></p>"
+		document.getElementById('intro').innerHTML = html;
 	},
 
 	generarHelp: function() {
@@ -419,8 +422,8 @@ dg.menu = {
 				table += "<td>" + fn.name + "</td>";
 				table += "<td>" + fn.parameters.map(x => x.dataType + " " + x.identifier).reverse().join(", ") + "</td>";
 				table += "<td>" +
-					"<button type='button' class='btn btn-sm m-1 btn-secondary' onclick='dg.menu.editarFunction(\"" + fn.name + "\");'>Editar</button>" +
-					"<button type='button' class='btn btn-sm m-1 btn-danger'onclick='dg.menu.borrarFunction(\"" + fn.name + "\");'>Borrar</button>" +
+					"<button type='button' class='btn btn-sm m-1 btn-secondary' onclick='dg.menu.editarFunction(\"" + fn.name + "\");' title='Editar'><i class='fa fa-pencil'></i></button>" +
+					"<button type='button' class='btn btn-sm m-1 btn-danger'onclick='dg.menu.borrarFunction(\"" + fn.name + "\");' title='Borrar'><i class='fa fa-trash'></i></button>" +
 					"</td>";
 			}
 			table += "</tbody></table>";
