@@ -3,8 +3,8 @@
 Debuggear es una aplicación para ayudar a aquellas personas que estan entrando en el espectacular mundo de la programación y la algoritmia. Esta aplicación permite capturar un algoritmo generado a mano, interpretarlo, y permitir ejecutarlo paso a paso
 
 
-{acerca de}
-
+## ¿Quiénes somos?
+Somos un equipo compuesto por cuatro estudiantes de ingeniería en informática. Debuggear nació como nuestro proyecto final de carrera
 
 
 
@@ -33,4 +33,4 @@ Aunque la aplicación se pensó para soportar varios lenguajes, por ahora sólo 
 ## Próximos pasos
 - Mejorar forma de compartir (Ya que reconocer extensiones de archivos para la aplicación como PWA esta ["demorado"](https://github.com/w3c/manifest/issues/626)
 - Migrar a Bootstrap v5 y quitar Jquery
-- Agregar Arreglos
+- Mejorar cosas de TODO

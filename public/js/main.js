@@ -30,7 +30,7 @@ window.dg = {
 	language: {}
 };
 
-dg.config.fontSize = 50;
+dg.config.fontSize = 40;
 
 
 if ('serviceWorker' in navigator) {

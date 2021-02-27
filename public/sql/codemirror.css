@@ -410,4 +410,5 @@ span.CodeMirror-selectedtext { background: none; }
   border: 1px solid #eee;
   height: auto;
   min-height: 120px;
+  font-size: 18px;
 }

@@ -2,7 +2,6 @@ dg.menu = {
 	clean: function() {
 		document.getElementById('intro').innerHTML = '';
 		clearInterval(dg.sql.cmInterval);
-		delete dg.sql.db;
 		delete dg.sql.cm;
 		delete dg.sql.cmInterval;
 	},
@@ -39,7 +38,7 @@ dg.menu = {
 						maxWidth: 1200,
 						maxHeight: 1200,
 						quality: 0.8,
-						convertSize: 500000,
+						convertSize: 1,
 						success(result) {
 							var fr = new FileReader();
 							fr.onload = function() {
@@ -121,17 +120,6 @@ dg.menu = {
 				footer.appendChild(button);
 			}
 
-			/*
-			if (opcion === 'export_diagram') {
-				var button = document.createElement('button');
-				button.type = 'button';
-				button.innerHTML = "<i class='fa fa-download'></i><br><span>Exportar diagrama</span>";
-				button.addEventListener('click', dg.shape.export_file);
-
-				footer.appendChild(button);
-			}
-			*/
-
 			if (opcion === 'generate_table') {
 				var button = document.createElement('button');
 				button.type = 'button';
@@ -147,100 +135,7 @@ dg.menu = {
 				button.innerHTML = "<i class='fa fa-play'></i><br><span>Ejecutar</span>";
 				button.addEventListener('click', function() {
 					localStorage.setItem("sql-statement", dg.sql.cm.getValue());
-					dg.step.processTableData();
-				});
-
-				footer.appendChild(button);
-			}
-
-			if (opcion === 'export_code') {
-				var button = document.createElement('button');
-				button.type = 'button';
-				button.innerHTML = "<i class='fa fa-file-code-o'></i><br><span>Exportar código</span>";
-				button.addEventListener('click', function() {
-					var diagram = JSON.parse(localStorage.getItem("diagram"));
-					var language = dg.language.CodeToLanguage(dg.step._diagramToCode(diagram));
-					var element = document.createElement('a');
-					element.setAttribute('href', 'data:text/x-c;charset=utf-8,' + encodeURIComponent(language));
-					element.setAttribute('download', "debuggear-code.c");
-
-					element.style.display = 'none';
-					document.body.appendChild(element);
-
-					element.click();
-
-					document.body.removeChild(element);
-				});
-
-				footer.appendChild(button);
-			}
-
-			if (opcion === 'show_symbol_table') {
-				var button = document.createElement('button');
-				button.type = 'button';
-				button.innerHTML = "<i class='fa fa-table'></i><br><span>Símbolos</span>";
-				button.addEventListener('click', function() {
-					var table = "<table class='table table-striped'><thead><tr><th>Clave</th><th>Tipo</th><th>Valor</th></tr></thead><tbody>";
-					for (var i in dg.code.pg.currentSymbolTable.table) {
-						table += "<tr><td>" +
-							i +
-							"</td><td>" +
-							dg.code.pg.currentSymbolTable.table[i].type +
-							"</td><td>" +
-							dg.code.pg.currentSymbolTable.table[i].data +
-							"</td></tr>"
-					}
-
-					$('#symbol-table .modal-body').html(table + "</tbody></table>");
-					$('#symbol-table').modal('show');
-				});
-
-				footer.appendChild(button);
-			}
-
-			if (opcion === 'exe_next') {
-				var button = document.createElement('button');
-				button.type = 'button';
-				button.id = 'footer_exe_next';
-				button.innerHTML = "<i class='fa fa-step-forward'></i><br><span>Siguiente</span>";
-				button.addEventListener('click', function() {
-					button.disabled = true;
-					var node = dg.code.pg.nextStep();
-					setTimeout(function() {
-						node = dg.code.pg.currentNode;
-						button.disabled = false;
-						if (!node) {
-							this.disabled = true;
-						} else {
-							dg.shape.select(node.getElement());
-						}
-						document.getElementById("console-container").innerHTML =
-							"<div>" + dg.code.pg.currentConsole.getHTML() + "</div>";
-						document.getElementById("console-container").firstChild.scrollIntoView(false);
-						document.getElementById("footer_exe_prev").disabled = false;
-					}, 2000);
-
-				});
-
-				footer.appendChild(button);
-			}
-
-			if (opcion === 'exe_prev') {
-				var button = document.createElement('button');
-				button.type = 'button';
-				button.id = 'footer_exe_prev';
-				button.innerHTML = "<i class='fa fa-step-backward'></i><br><span>Anteior</span>";
-				button.addEventListener('click', function() {
-					var node = dg.code.pg.prevStep();
-					if (!node) {
-						this.disabled = true;
-					} else {
-						dg.shape.select(node.getElement());
-					}
-					document.getElementById("console-container").innerHTML =
-						"<div>" + dg.code.pg.currentConsole.getHTML() + "</div>";
-					document.getElementById("console-container").firstChild.scrollIntoView(false);
-					document.getElementById("footer_exe_next").disabled = false;
+					dg.step.executeStatement();
 				});
 
 				footer.appendChild(button);
@@ -254,27 +149,10 @@ dg.menu = {
 		return footer;
 	},
 
-
-	// XXX ???
-	generarBGImage: function() {
-		var currentImage = localStorage.getItem("currentImage");
-
-		if (currentImage) {
-			var image = document.createElement('img');
-			var divBGImage = document.getElementById("diagram-bg-image");
-			divBGImage.innerHTML = '';
-			divBGImage.appendChild(image);
-			image.style.position = 'absolute';
-			image.style.width = '100%';
-			image.src = currentImage;
-		}
-	},
-
-
 	generarTables: function() {
-		var tables = JSON.parse(localStorage.getItem("sql-tables")) || null;
+		var tables = JSON.parse(localStorage.getItem("sql-tables")) || {};
 
-		if (!tables) {
+		if (!tables || Object.keys(tables).length === 0) {
 			$('#intro').html("<h1>¡Bienvenido!</h1><br>Elija una opción debajo para comenzar");
 			return;
 		}
@@ -294,7 +172,9 @@ dg.menu = {
 				"<button class='btn btn-sm btn-secondary' onclick='dg.menu.editarTabla(\"" + table + "\");' title='Editar'>",
 				"<i class='fa fa-pencil'></i></button> ",
 				"<button class='btn btn-sm btn-danger' onclick='dg.menu.borrarTabla(\"" + table + "\");' title='Borrar'>",
-				"<i class='fa fa-trash'></i></button>",
+				"<i class='fa fa-trash'></i></button> ",
+				"<button class='btn btn-sm btn-info' onclick='dg.menu.exportarTabla(\"" + table + "\");' title='Exportar'>",
+				"<i class='fa fa-share-square-o'></i></button>",
 				"</td>",
 				"</tr>"
 			);
@@ -322,6 +202,51 @@ dg.menu = {
 			localStorage.setItem("sql-tables", JSON.stringify(tables));
 			dg.step.check();
 		}
+	},
+
+	exportarTabla: function(name) {
+		var tables = JSON.parse(localStorage.getItem("sql-tables")) || {};
+		var table = tables[name];
+
+		dataQ = table.fields[Object.keys(table.fields)[0]].data.length;
+
+		sql_table = "CREATE TABLE " + table.name + "(\n";
+		sql_insert = "INSERT INTO " + table.name + " VALUES\n";
+		sql_fields = [];
+		sql_data = [];
+		for (var i = 0; i < dataQ; i++) {
+			sql_data[i] = [];
+		}
+
+		for (var fieldName in table.fields) {
+			field = table.fields[fieldName];
+			sql_fields.push(fieldName + " " + (field.sqliteType || dg.sql.types[field.type].sqliteType));
+
+			for (var i = 0; i < dataQ; i++) {
+				sql_data[i].push("'" + field.data[i] + "'");
+			}
+		}
+
+		for (var i = 0; i < dataQ; i++) {
+			sql_data[i] = sql_data[i].join(", ");
+		}
+
+		sql_table += sql_fields.join(",\n") + "\n);\n";
+
+		sql_insert += "(" + sql_data.join("),\n(") + ");\n";
+
+
+		var element = document.createElement('a');
+		element.setAttribute('href', 'data:application/sql;charset=utf-8,' +
+			encodeURIComponent(sql_table + sql_insert));
+		element.setAttribute('download', name + ".sql");
+
+		element.style.display = 'none';
+		document.body.appendChild(element);
+
+		element.click();
+
+		document.body.removeChild(element);
 	},
 
 	generarGenerateTable: function() {
@@ -464,7 +389,7 @@ dg.menu = {
 		$('#intro').html(HTML.join(""));
 	},
 
-	generarScanSQL: function() {
+	generarExecuteSQL: function() {
 		var statement = localStorage.getItem("sql-statement");
 		if (!statement) {
 			localStorage.removeItem("sql-screen");
@@ -474,7 +399,9 @@ dg.menu = {
 
 		var HTML = [
 			"<h2 class='mb-3'>Consulta</h2>",
-			"<textarea id='editStatementTextarea'>" + statement + "</textarea>"
+			"<textarea id='editStatementTextarea'>" + statement + "</textarea>",
+			"<div id='diagramResults' class='mt-3'></div>",
+			"<div id='executeResults' class='mt-3'></div>"
 		];
 
 		$('#intro').html(HTML.join(""));
@@ -488,5 +415,77 @@ dg.menu = {
 		dg.sql.cmInterval = setInterval(function() {
 			localStorage.setItem("sql-statement", dg.sql.cm.getValue());
 		}, 5000);
+	},
+
+	generarExecuteResults: function(result, statement, db) {
+		var HTML = [
+			"<h2>Resultado</h2>",
+			"<button class='btn btn-secondary btn-sm my-2' id='newTableWithResults'>Nueva tabla con resultados</button>",
+			"<table class='table table-striped table-bordered table-sm' style='font-size: 18px;'>",
+			"<thead><tr><th>" + result.columns.join("</th><th>") + "</th></thead><tbody>"
+		];
+
+		for (var i = 0; i < result.values.length; i++) {
+			HTML.push("<tr><td>" + result.values[i].join("</td><td>") + "</td></tr>");
+		}
+		HTML.push("</tbody></table>");
+		$('#executeResults').html(HTML.join(""));
+
+		$("#newTableWithResults").on("click", function() {
+			var tableName = prompt("Ingrese el nombre para la nueva tabla");
+			if (!tableName) {
+				return;
+			}
+
+			var tables = JSON.parse(localStorage.getItem("sql-tables")) || {};
+
+			if (tables[tableName]) {
+				if (!confirm("Ya existe una tabla con ese nombre. ¿Desea sobreescribirla?")) {
+					return;
+				}
+			}
+
+			var sqliteTypes = db.exec("SELECT " + "typeof(" + result.columns.join("), typeof(") + ")" + "FROM (" + statement + ") LIMIT 1;")[0].values[0];
+			sqliteTypes = sqliteTypes.map(function(type) {
+				return type === "null" ? "TEXT" : type.toUpperCase();
+			});
+
+			var tableFields = {};
+			for (var i = 0; i < sqliteTypes.length; i++) {
+				tableFields[result.columns[i]] = {
+					sqliteType: sqliteTypes[i],
+					data: result.values.map(function(x) {
+						return x[i];
+					})
+				};
+			}
+
+			tables[tableName] = {
+				name: tableName,
+				fields: tableFields
+			};
+
+
+			localStorage.setItem("sql-tables", JSON.stringify(tables));
+			localStorage.setItem("sql-table", tableName);
+			dg.step.screenSeeTable();
+		});
+	},
+
+	errorExecuteResults: function(error) {
+		$('#executeResults').html(
+			"<h2>Error</h2><div class='alert alert-danger' style='font-size: 18px;'>" + error + "</div>"
+		);
+		$('#diagramResults').html("");
+	},
+
+	generarDiagramResults: function(base64Image) {
+		$('#diagramResults').html(
+			"<h2>Diagrama</h2><img src='data:image/png;base64," + base64Image + "' class='w-100' />"
+		);
+	},
+
+	limpiarDiagramResults: function() {
+		$('#diagramResults').html("");
 	}
 }

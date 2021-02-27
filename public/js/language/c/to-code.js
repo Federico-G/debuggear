@@ -52,7 +52,7 @@ dg.language.CodeToLanguage = function(elements, functions) {
 					if (content[0] === "\"") {
 						aux_content = content.replaceAll("%", "%%");
 						retornar += aux_content.substring(1, aux_content.length - 1);
-					} else if(/^[a-zA-Z_]$/.test(content[0])) {
+					} else if (/^[a-zA-Z_]$/.test(content[0])) {
 						name = content;
 						type = variables[name];
 						retornar += dg.language.typeToFormat(type);
@@ -153,9 +153,9 @@ dg.language.CodeToLanguage = function(elements, functions) {
 		code.push("#include <string.h>");
 		code.push("#include <stdlib.h>");
 		code.push("");
-		
+
 		var functions = JSON.parse(localStorage.getItem("functions"));
-		for(var i in functions) {
+		for (var i in functions) {
 			code.push(functions[i].language);
 			code.push("");
 		}

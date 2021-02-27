@@ -34,14 +34,24 @@ dg.sql.types = {
 		sqliteType: "TEXT",
 		group: "Número"
 	},
-	"random.number": {
-		name: "Número 5",
+	"random.number:99": {
+		name: "Número 2",
 		sqliteType: "INTEGER",
 		group: "Número"
 	},
-	"finance.account": {
+	"random.number:9999": {
+		name: "Número 4",
+		sqliteType: "INTEGER",
+		group: "Número"
+	},
+	"random.number:99999999": {
 		name: "Número 8",
 		sqliteType: "INTEGER",
+		group: "Número"
+	},
+	"commerce.price": {
+		name: "Precio",
+		sqliteType: "REAL",
 		group: "Número"
 	},
 	"system.semver": {
@@ -156,6 +166,11 @@ dg.sql.types = {
 	},
 	"commerce.product": {
 		name: "Producto",
+		sqliteType: "TEXT",
+		group: "Otros"
+	},
+	"company.companyName": {
+		name: "Compañia",
 		sqliteType: "TEXT",
 		group: "Otros"
 	},

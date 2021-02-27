@@ -7,7 +7,7 @@
 	<link rel='shortcut icon' href='favicon.ico' />
 	<title>Debuggear web</title>
 	<meta name="title" content="Debuggear web">
-	<meta name="description" content="Description">
+	<meta name="description" content="Debuggear es una aplicación para ayudar a aquellas personas que estan entrando en el espectacular mundo de la programación y la algoritmia. Esta aplicación permite leer tablas en formato DER, creando datos automáticamente y permitiendo capturar y ejecutar codigo sql">
 
 	<link rel="manifest" href="/manifest.json" />
 
@@ -24,9 +24,9 @@
 
 	<!-- Open Graph -->
 	<meta property="og:type" content="website">
-	<meta property="og:url" content="https://debuggear-web.web.app/">
+	<meta property="og:url" content="https://debuggear-web.web.app/sql.html">
 	<meta property="og:title" content="Debuggear web">
-	<meta property="og:description" content="Description">
+	<meta property="og:description" content="Debuggear es una aplicación para ayudar a aquellas personas que estan entrando en el espectacular mundo de la programación y la algoritmia. Esta aplicación permite leer tablas en formato DER, creando datos automáticamente y permitiendo capturar y ejecutar codigo sql">
 	<meta property="og:image" content="https://debuggear-web.web.app/android-chrome-512x512.png">
 
 	<!-- vendor -->
@@ -96,5 +96,12 @@
 	<script src='sql/types.js'></script>
 	<script src='sql/menu.js'></script>
 	<script src='sql/step.js'></script>
+	<script type="text/javascript">
+		(async function() {
+			window.dg.sql.sqljs = await initSqlJs({
+				locateFile: file => `https://debuggear-web.web.app/sql/${file}`
+			});
+		})();
+	</script>
 </body>
 </html>
