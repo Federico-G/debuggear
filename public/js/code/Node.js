@@ -191,7 +191,13 @@ dg.code.Node.prototype.run = async function(symbolTable, console) {
 		case 'in':
 			var expr = this.expression.split(" ");
 			var name = expr.pop();
-			var type = expr.join(" ");
+			var type;
+			if (symbolTable.table[name]) {
+				type = symbolTable.table[name].type;
+			} else {
+				type = expr.join(" ");
+			}
+
 			var data = prompt("Ingrese un valor de tipo " + type + " para: " + name);
 			symbolTable.addSymbol(name, new dg.code.Symbol(type, data));
 			break;

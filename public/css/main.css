@@ -50,7 +50,8 @@ footer {
   text-align: center;
 }
 
-footer > * {
+footer button,
+footer a {
   flex: 1;
   color: #FFF;
   text-decoration: none;
@@ -61,7 +62,7 @@ footer > * {
   padding-bottom: 8px;
 }
 
-footer > .disabled, footer > :disabled {
+footer .disabled, footer :disabled {
   color: #777;
 }
 
@@ -259,4 +260,21 @@ footer a:hover {
   min-height: 150px;
   /*background-color: rgba(255, 255, 255, 0.9375);*/
   background: #FAFAFA;
+}
+
+
+
+
+
+
+
+/*  ----- SQL -----  */
+#formGenerador {
+  font-size: 20px;
+}
+
+/* Jquery UI */
+.ui-sortable-handle {
+  -ms-touch-action: none;
+  touch-action: none
 }

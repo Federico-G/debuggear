@@ -16,17 +16,21 @@ window.dg = {
 		},
 		set scale(x) {
 			this._scale = x;
-			document.getElementById("shape-container").style.transform = "scale(" + x + ")";
+			var shapeContainer = document.getElementById("shape-container");
+			if (shapeContainer) {
+				shapeContainer.style.transform = "scale(" + x + ")";
+			}
 		},
 		get scale() {
 			return this._scale;
 		}
 	},
 	code: {},
+	sql: {},
 	language: {}
 };
 
-dg.config.fontSize = 50;
+dg.config.fontSize = 40;
 
 
 if ('serviceWorker' in navigator) {

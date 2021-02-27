@@ -42,7 +42,20 @@ const resourcesToPrecache = [
 
 	'fonts/fontawesome-webfont.woff2',
 
-	'image/white-icon.svg'
+	'image/white-icon.svg',
+
+
+	'sql.html',
+	'sql/codemirror-sql.js',
+	'sql/codemirror.css',
+	'sql/codemirror.js',
+	'sql/faker.min.js',
+	'sql/menu.js',
+	'sql/sql-wasm.js',
+	'sql/sql-wasm.wasm',
+	'sql/step.js',
+	'sql/types.js',
+	'sql/worker.sql-wasm.js'
 ];
 
 self.addEventListener('install', event => {

@@ -7,7 +7,7 @@
 	<link rel='shortcut icon' href='favicon.ico' />
 	<title>Debuggear web</title>
 	<meta name="title" content="Debuggear web">
-	<meta name="description" content="Description">
+	<meta name="description" content="Debuggear es una aplicación para ayudar a aquellas personas que estan entrando en el espectacular mundo de la programación y la algoritmia. Esta aplicación permite leer tablas en formato DER, creando datos automáticamente y permitiendo capturar y ejecutar codigo sql">
 
 	<link rel="manifest" href="/manifest.json" />
 
@@ -24,14 +24,15 @@
 
 	<!-- Open Graph -->
 	<meta property="og:type" content="website">
-	<meta property="og:url" content="https://debuggear-web.web.app/">
+	<meta property="og:url" content="https://debuggear-web.web.app/sql.html">
 	<meta property="og:title" content="Debuggear web">
-	<meta property="og:description" content="Description">
+	<meta property="og:description" content="Debuggear es una aplicación para ayudar a aquellas personas que estan entrando en el espectacular mundo de la programación y la algoritmia. Esta aplicación permite leer tablas en formato DER, creando datos automáticamente y permitiendo capturar y ejecutar codigo sql">
 	<meta property="og:image" content="https://debuggear-web.web.app/android-chrome-512x512.png">
 
 	<!-- vendor -->
 	<link type='text/css' rel='stylesheet' href='css/font-awesome.min.css' />
 	<link type='text/css' rel='stylesheet' href='css/bootstrap.min.css' />
+	<link type='text/css' rel='stylesheet' href='sql/codemirror.css' />
 
 	<!-- user -->
 	<link type='text/css' rel='stylesheet' href='css/main.css' />
@@ -50,18 +51,6 @@
 				<div class="collapse navbar-collapse" id="navbarSupportedContent">
 					<ul class="navbar-nav">
 						<li class="nav-item">
-							<a class="nav-link" href="#" onclick="dg.step.screenMain(); $('.navbar-collapse').collapse('hide'); return false;">Diagrama</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="#" onclick="dg.step.screenInfo(); $('.navbar-collapse').collapse('hide'); return false;">Info</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="#" onclick="dg.step.screenHelp(); $('.navbar-collapse').collapse('hide'); return false;">Ayuda</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="#" onclick="dg.step.screenFunctions(); $('.navbar-collapse').collapse('hide'); return false;">Funciones</a>
-						</li>
-						<li class="nav-item">
 							<a class="nav-link main-text-color" href="/">Algoritmos</a>
 						</li>
 						<li class="nav-item" style="display: none;">
@@ -77,26 +66,42 @@
 	</header>
 
 	<main id='main' role='main'>
-		<div id='intro' style="position: absolute;"></div>
-		<div id='diagram-bg-image'></div>
-		<div id='shape-container'></div>
+		<div id='intro' style="position: absolute; left: 0; right: 0;" class="container"></div>
 	</main>
 	<footer class="sql-color"></footer>
 
 	<!-- vendor -->
 	<script src='js/jquery.min.js'></script>
 	<script src='js/bootstrap.bundle.min.js'></script>
-	<script src='js/interact.min.js'></script>
 	<script src='js/compressor.min.js'></script>
+
+	<script src='sql/codemirror.js'></script>
+	<script src='sql/codemirror-sql.js'></script>
+	<script src='sql/sql-wasm.js'></script>
+	<script src='sql/worker.sql-wasm.js'></script>
+	<script src='sql/faker.min.js'></script>
+	<script type="text/javascript">
+		faker.unique = {
+			"unique": function() { return ++faker.id; }
+		};
+		faker.name.sex = function() {
+			var x = Math.random(); return x < 0.2 ? "Otro" : (x < 0.6 ? "Hombre" : "Mujer");
+		};
+		faker.definitions.phone_number.formats = ["##########", "## ####-####", "### ###-####", "#### ##-####", "### ### ####"];
+	</script>
+
 
 	<!-- user -->
 	<script src='js/main.js'></script>
-	<script src='js/interact-init.js'></script>
-	<script src='js/shape.js'></script>
+	<script src='sql/types.js'></script>
 	<script src='sql/menu.js'></script>
 	<script src='sql/step.js'></script>
-
-	<script src='sql/sql-wasm.js'></script>
-	<script src='sql/worker.sql-wasm.js'></script>
+	<script type="text/javascript">
+		(async function() {
+			window.dg.sql.sqljs = await initSqlJs({
+				locateFile: file => `https://debuggear-web.web.app/sql/${file}`
+			});
+		})();
+	</script>
 </body>
 </html>

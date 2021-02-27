@@ -305,7 +305,7 @@ dg.shape = {
 			placement: 'bottom',
 			trigger: 'manual'
 		});
-		if(shape.classList.contains("shape-selected")) {
+		if (shape.classList.contains("shape-selected")) {
 			$(shape).popover("show");
 		}
 		// TODO

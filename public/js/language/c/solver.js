@@ -37,7 +37,7 @@ dg.language.solve = function(type, expression, symbolTable) {
 					}
 				}
 			} catch (e) {
-				
+
 			}
 			code = expression + ";\n";
 		} else if (type == 'expression') {

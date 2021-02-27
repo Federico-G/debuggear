@@ -65,7 +65,7 @@ dg.menu = {
 							maxWidth: 1200,
 							maxHeight: 1200,
 							quality: 0.8,
-							convertSize: 500000,
+							convertSize: 1,
 							success(result) {
 								var fr = new FileReader();
 								fr.onload = function() {
@@ -109,7 +109,7 @@ dg.menu = {
 							maxWidth: 1200,
 							maxHeight: 1200,
 							quality: 0.8,
-							convertSize: 500000,
+							convertSize: 1,
 							success(result) {
 								var fr = new FileReader();
 								fr.onload = function() {
@@ -179,7 +179,7 @@ dg.menu = {
 									dg.step.generateCode();
 								}
 							}
-						}, 0); 
+						}, 0);
 					}
 				});
 
@@ -280,7 +280,7 @@ dg.menu = {
 							"<div>" + dg.code.pg.currentConsole.getHTML() + "</div>";
 						document.getElementById("console-container").firstChild.scrollIntoView(false);
 						document.getElementById("footer_exe_prev").disabled = false;
-					}, 2000);
+					}, 1500);
 
 				});
 
@@ -291,7 +291,7 @@ dg.menu = {
 				var button = document.createElement('button');
 				button.type = 'button';
 				button.id = 'footer_exe_prev';
-				button.innerHTML = "<i class='fa fa-step-backward'></i><br><span>Anteior</span>";
+				button.innerHTML = "<i class='fa fa-step-backward'></i><br><span>Anterior</span>";
 				button.addEventListener('click', function() {
 					var node = dg.code.pg.prevStep();
 					if (!node) {
@@ -383,26 +383,85 @@ dg.menu = {
 		}
 	},
 
-	/*
-	generarConsole: function() {
-		var divConsole = document.getElementById("console-container");
-		// divConsole
-		//
-	},
-	*/
-
-
 	generarCrear: function() {
 		document.getElementById('intro').innerHTML = '<h1>¡Nuevo!</h1><br>Elija una opción debajo para comenzar';
 	},
 
-
 	generarInfo: function() {
-		document.getElementById('intro').innerHTML = '<h1>¡Holis!</h1><br>Proximamente aquí podrá encontrar información de los autores de la aplicación, y como poder contribuir para mejorarla';
+		var html = "<h1 class='mb-3'>Información</h1>";
+
+		html += "<div style='font-size: 20px;'>";
+
+		html += "<p>Bienvenidos/as a Debuggear, una web para ayudarte en la resolución de ejercicios de diagramas de programación y bases de datos con una interfaz amigable, intuitiva y simple! </p>";
+		html += "<p>Con Debuggear podrás validar, ejecutar y probar tus algoritmos y queries fácilmente paso a paso. Esto te permitirá aprender el funcionamiento de los algoritmos y sentencias fácilmente.</p>";
+		html += "<p>La idea es poder brindar una alternativa interactiva para poder comprender aquellos conceptos que normalmente suelen ser complicados debido a su naturaleza abstracta.</p>";
+
+		html += "<h2 class='my-2'>¿Quiénes somos?</h2>";
+		html += "<p>Somos un equipo compuesto por cuatro estudiantes de ingeniería en informática. Debuggear nació como nuestro proyecto final de carrera</p>";
+		html += "<div class='row'>";
+		html += "<div class='col-6 my-2'><img src='/image/fede.jpg' width='150' height='170' /><div>Federico Gasior</div></div>";
+		html += "<div class='col-6 my-2'><img src='/image/flor.jpg' width='150' height='170' /><div>Florencia Kaucic</div></div>";
+		html += "<div class='col-6 my-2'><img src='/image/lu.jpg' width='150' height='170' /><div>Lucia Corleto</div></div>";
+		html += "<div class='col-6 my-2'><img src='/image/diego.jpg' width='150' height='170' /><div>Diego Porro</div></div>";
+		html += "</div>";
+
+		html += "<p class='mt-3'>Para comenzar a escanear acceda a la sección <a href='#' onclick='dg.step.screenMain(); return false;'>Diagrama</a></p>"
+		html += "</div>";
+
+		document.getElementById('intro').innerHTML = html;
 	},
 
 	generarHelp: function() {
-		document.getElementById('intro').innerHTML = '<h1>¡Holis!</h1><br>Proximamente aquí podrá encontrar información de como utilizar esta aplicación';
+		var html = "<h1 class='mb-3'>Ayuda</h1>";
+
+		html += "<div style='font-size: 20px;'>";
+
+		html += "<h2 class='my-2'>¿Cómo funciona la web?</h2>";
+		html += "<p>La web tiene dos módulos principales, uno para trabajar con diagramas de programación y otro para bases de datos.</p>";
+		html += "<p>El módulo de diagramas permite sacar una foto de un diagrama realizado a mano, o bien seleccionar el archivo desde el dispositivo. Una vez seleccionado el diagrama, la web realiza un análisis del mismo identificando los elementos y el texto contenido en ellos, ambos editables manualmente. Luego se habilita un debug paso a paso del mismo en donde se visualizan los valores de cada variable hasta ver el resultado final del algoritmo. Por último, se puede descargar el código en lenguaje C para su ejecución.</p>";
+		html += "<p>El módulo de bases de datos analiza un diagrama DER, reconoce tablas y atributos, crea las tablas y carga datos genéricos automáticamente. Luego permite subir una sentencia SQL y devuelve la tabla resultante junto con un interesante gráfico que da una ayuda visual para analizar las relaciones y filtros utilizados. También permite descargar las sentencias SQL de creación de las tablas, de carga de datos y almacenar los resultados de las sentencias para que puedan reutilizarse.</p>";
+
+		html += "<h2 class='my-2'>¿Qué tipo de diagramas puedo cargar?</h2>";
+		html += "<p>Para algoritmos se pueden cargar los diagramas de programación de la materia elementos de programación. A continuación, algunos ejemplos:</p>";
+		html += "<img src='/image/algo1.jpg' style='width: 100%; max-width: 300px;' /><br><br>";
+		html += "<img src='/image/algo2.jpg' style='width: 100%; max-width: 300px;' /><br><br>";
+		html += "<p>Para SQL deben subirse diagramas básicos DER con el formato: </p>";
+		html += "<img src='/image/der1.jpg' style='width: 100%; max-width: 300px;' /><br><br>";
+		html += "<img src='/image/der2.jpg' style='width: 100%; max-width: 300px;' /><br><br>";
+
+		html += "<h2 class='my-2'>¿Cómo puedo cargar mi diagrama?</h2>";
+		html += "<p>Los diagramas, ya sean algoritmos o DER, pueden obtenerse tomando una foto o bien seleccionando un archivo en el dispositivo donde se esté ejecutando la web.</p>";
+		html += "<p>Para ello, puedes tomar una foto seleccionando el botón “Capturar” o si quieres elegir una foto de tu galería, puedes seleccionar el botón “Seleccionar”.</p>";
+		html += "<p>Si no tienes un diagrama previamente dibujado, puedes crear uno nuevo seleccionando el botón “Crear vacío”. Allí se te abrirá un lienzo en blanco sobre el que podrás agregar figuras en orden secuencial utilizando el botón “+” que encontrarás en la esquina inferior derecha de la pantalla. Luego solo tienes que acomodar las figuras y escribir las operaciones en su interior.</p>";
+
+		html += "<h2 class='my-2'>¿Puedo guardar diagramas ya analizados?</h2>";
+		html += "<p>Sí, la web permite descargar los diagramas que se van utilizando para luego poder reutilizarlos sin necesidad de volver a escanearlos y editarlos manualmente cuando fuera necesario.</p>";
+		html += "<p>El botón de descarga de diagramas es: <i class='fa fa-download'></i> Exportar Diagrama</p>";
+		html += "<p>Si quieres seleccionar un diagrama exportado previamente, puedes hacerlo seleccionando el botón “Importar diagrama” dentro del menú <b>Nuevo</b>.</p>";
+
+		html += "<h2 class='my-2'>¿Cómo genero el código ejecutable de mi diagrama?</h2>";
+		html += "<p>La web permite descargar el código SQL o C dependiendo del diagrama seleccionado para su ejecución automática sin la necesidad de codificarlo manualmente.</p>";
+		html += "<p>El botón de generación de código es: <i class='fa fa-file-code-o'></i> Exportar código</p>";
+
+		html += "<h2 class='my-2'>¿Qué consideraciones debo tener en cuenta a la hora de subir un diagrama?</h2>";
+		html += "<p>Los diagramas deben realizarse sobre una hoja en blanco, con birome negra o azul, en imprenta, el texto no puede superponerse con la figura y letra imprenta lo más prolija posible.  En el caso de los DER debe utilizarse letra mayúscula para las tablas y minúscula para los campos o atributos de las tablas.</p>";
+
+		html += "<h2 class='my-2'>¿Cómo interactúo con mi diagrama?</h2>";
+		html += "<p>Una vez que tengas cargada la foto de tu diagrama, puedes editar todo lo que la aplicación haya reconocido. Solo tienes que seleccionar la forma reconocida y podrás editar el texto que contiene. También puedes agregar las formas que desees si es que no se reconoció alguna que dibujaste o te olvidaste de incluirla en tu dibujo. Para agregar formas utiliza el botón “+” que se encuentra en la esquina inferior derecha de la pantalla. </p>";
+		html += "<p>Si ya estás conforme con el diagrama, toca el botón “validar” para detectar si hay algún error. Si se encuentra alguna falla la aplicación lo informará y, sino, avanzará a la siguiente fase: la depuración.</p>";
+		html += "<p>En la fase de depuración, podrás ejecutar cada paso de tu algoritmo e ir consultando la tabla de símbolos para ver cómo cambian los valores de tus variables. Y lo mejor es que si no te quedó claro un paso, podrás volver atrás sin necesidad de volver a comenzar toda la ejecución.</p>";
+		html += "<p>Si deseas modificar el algoritmo puedes utilizar el botón “Editar”. </p>";
+		html += "<p>Si deseas descargar el código fuente C de tu algoritmo, puedes utilizar el botón “Exportar código”. </p>";
+		html += "<p>Con el botón “Símbolos” puedes consultar la tabla de símbolos en cualquier momento.</p>";
+		html += "<p>Y con los botones “Anterior” y “Siguiente” puedes navegar en la ejecución del algoritmo, avanzando (Siguiente) o retrocediendo (Anterior) en cada operación o sentencia.</p>";
+
+		html += "<h2 class='my-2'>Comentarios, sugerencias, mejoras</h2>";
+		html += "<p><a href='https://github.com/Federico-G/debuggear'><i class='fa fa-github'></i> debuggear</a></p>";
+		html += "<p><a href='https://www.instagram.com/debuggearApp/'><i class='fa fa-instagram'></i> debuggearApp</a></p>";
+
+		html += "</div>";
+
+		document.getElementById('intro').innerHTML = html;
 	},
 
 	generarFunctions: function() {
@@ -419,8 +478,8 @@ dg.menu = {
 				table += "<td>" + fn.name + "</td>";
 				table += "<td>" + fn.parameters.map(x => x.dataType + " " + x.identifier).reverse().join(", ") + "</td>";
 				table += "<td>" +
-					"<button type='button' class='btn btn-sm m-1 btn-secondary' onclick='dg.menu.editarFunction(\"" + fn.name + "\");'>Editar</button>" +
-					"<button type='button' class='btn btn-sm m-1 btn-danger'onclick='dg.menu.borrarFunction(\"" + fn.name + "\");'>Borrar</button>" +
+					"<button type='button' class='btn btn-sm m-1 btn-secondary' onclick='dg.menu.editarFunction(\"" + fn.name + "\");' title='Editar'><i class='fa fa-pencil'></i></button>" +
+					"<button type='button' class='btn btn-sm m-1 btn-danger'onclick='dg.menu.borrarFunction(\"" + fn.name + "\");' title='Borrar'><i class='fa fa-trash'></i></button>" +
 					"</td>";
 			}
 			table += "</tbody></table>";
