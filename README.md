@@ -9,7 +9,7 @@ Somos un equipo compuesto por cuatro estudiantes de ingeniería en informática.
 
 
 ## Consultas y reporte de errores
-{issues de github}
+[Issues de Github](https://github.com/Federico-G/debuggear/issues)
 
 
 
