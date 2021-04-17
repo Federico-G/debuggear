@@ -110,6 +110,28 @@
 	<script src='js/tf.min.js'></script>	
 	<script src='js/tf-automl.min.js'></script>
 
+	<!-- The core Firebase JS SDK is always required and must be listed first -->
+	<script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-app.js"></script>
+
+	<script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-analytics.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-storage.js"></script>
+
+	<script>
+		var firebaseConfig = {
+			apiKey: "AIzaSyCpNJVR9zpPRCkrM8iJhDoRwUJlaTAOYd0",
+			authDomain: "debuggear-web.firebaseapp.com",
+			databaseURL: "https://debuggear-web.firebaseio.com",
+			projectId: "debuggear-web",
+			storageBucket: "debuggear-web.appspot.com",
+			messagingSenderId: "438583620617",
+			appId: "1:438583620617:web:958abed00c1c0a3c54f4d8",
+			measurementId: "G-8E05GKE4M2"
+		};
+		firebase.initializeApp(firebaseConfig);
+		firebase.analytics();
+		firebase.storage();
+	</script>
+
 	<!-- user -->
 	<script src='js/main.js'></script>
 	<script src='js/interact-init.js'></script>

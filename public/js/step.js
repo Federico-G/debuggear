@@ -72,7 +72,7 @@ dg.step = {
 		localStorage.setItem("screen", "main");
 		dg.menu.clean();
 		document.getElementById("shape-container").style.display = 'block';
-		dg.menu.generarFooter(["new", "export_diagram", "validate_and"]);
+		dg.menu.generarFooter(["new", "export_diagram", "improve_detection", "validate_and"]);
 
 		var diagram = localStorage.getItem("diagram");
 

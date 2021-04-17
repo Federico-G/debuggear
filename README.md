@@ -28,9 +28,3 @@ Somos un equipo compuesto por cuatro estudiantes de ingeniería en informática.
 
 ## Lenguajes soportados
 Aunque la aplicación se pensó para soportar varios lenguajes, por ahora sólo soporta C (C99)
-
-
-## Próximos pasos
-- Mejorar forma de compartir (Ya que reconocer extensiones de archivos para la aplicación como PWA esta ["demorado"](https://github.com/w3c/manifest/issues/626)
-- Migrar a Bootstrap v5 y quitar Jquery
-- Mejorar cosas de TODO
