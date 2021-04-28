@@ -418,9 +418,18 @@ dg.menu = {
 	},
 
 	generarExecuteResults: function(result, statement, db) {
+		if (!result) {
+			$('#executeResults').html(
+				"<h2>Resultado</h2><div class='alert alert-warning' style='font-size: 18px;'>" +
+				"No se encontraron resultados para la consulta" +
+				"</div>"
+			);
+			return;
+		}
 		var HTML = [
 			"<h2>Resultado</h2>",
 			"<button class='btn btn-secondary btn-sm my-2' id='newTableWithResults'>Nueva tabla con resultados</button>",
+			"<div class='table-responsive'>",
 			"<table class='table table-striped table-bordered table-sm' style='font-size: 18px;'>",
 			"<thead><tr><th>" + result.columns.join("</th><th>") + "</th></thead><tbody>"
 		];
@@ -428,7 +437,7 @@ dg.menu = {
 		for (var i = 0; i < result.values.length; i++) {
 			HTML.push("<tr><td>" + result.values[i].join("</td><td>") + "</td></tr>");
 		}
-		HTML.push("</tbody></table>");
+		HTML.push("</tbody></table></div>");
 		$('#executeResults').html(HTML.join(""));
 
 		$("#newTableWithResults").on("click", function() {

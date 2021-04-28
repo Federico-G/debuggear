@@ -160,6 +160,45 @@ dg.menu = {
 				footer.appendChild(button);
 			}
 
+			if (opcion === 'improve_detection') {
+				var button = document.createElement('button');
+				button.type = 'button';
+				button.innerHTML = "<i class='fa fa-line-chart'></i><br><span>Mejoremos detección</span>";
+				button.addEventListener('click', function() {
+					var currentImage = localStorage.getItem("currentImage");
+					if (!currentImage) {
+						alert("Se necesita tener cargada una imagen para continuar");
+						return;
+					}
+
+					if (!confirm(
+						"¡Ayudanos a mejorar la detección!\n" + 
+						"Se subirá los datos de la imagen del algoritmo junto con las formas detectadas para" +
+						" ser utilizadas para mejorar la detección de formas. Le pedimos que las formas hayan" +
+						" sido marcadas de forma correcta y que la imagen del algoritmo sea nítida.\n" +
+						"¿Desea continuar?"
+					)) {
+						return;
+					}
+
+					dg.menu.saveDiagram();
+					var file = JSON.stringify({
+						elements: JSON.parse(localStorage.getItem("diagram")),
+						image: currentImage
+					});
+
+					var storageRef = firebase.storage().ref();
+					var fileRef = storageRef.child(Date.now() + ".json");
+					fileRef.putString(file).then(function(snapshot) {
+						alert("Los datos del algoritmo fueron subidos correctamente. ¡Muchas gracias por su aporte!");
+					}).catch(function(e) {
+						alert("Hubo un error al cargar los datos :(");
+					});
+				});
+
+				footer.appendChild(button);
+			}
+
 			if (opcion === 'validate_and') {
 				var button = document.createElement('button');
 				button.type = 'button';
