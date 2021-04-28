@@ -1,16 +1,15 @@
-# debuggear
+# Debuggear
 
-Debuggear es una aplicación para ayudar a aquellas personas que estan entrando en el espectacular mundo de la programación y la algoritmia. Esta aplicación permite capturar un algoritmo generado a mano, interpretarlo, y permitir ejecutarlo paso a paso
+Debuggear es una aplicación para ayudar a aquellas personas que estan entrando en el espectacular mundo de la programación y la algoritmia. Esta aplicación permite capturar un algoritmo generado a mano, interpretarlo, y permitir ejecutarlo paso a paso.
+Puedes probarlo desde [debuggear-web.web.app](https://debuggear-web.web.app/)
 
 
 ## ¿Quiénes somos?
 Somos un equipo compuesto por cuatro estudiantes de ingeniería en informática. Debuggear nació como nuestro proyecto final de carrera
 
 
-
 ## Consultas y reporte de errores
 [Issues de Github](https://github.com/Federico-G/debuggear/issues)
-
 
 
 ## Tecnologias usadas:
