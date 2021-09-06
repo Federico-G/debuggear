@@ -58,7 +58,8 @@ dg.language.solve = function(type, expression, symbolTable) {
 			"LanguageChoice": "6", // C
 			"Program": program,
 			"Input": "",
-			"CompilerArgs": "-Wall -std=gnu99 -fcompare-debug-second -O1 -o a.out source_file.c"
+			"CompilerArgs": "-Wall -std=gnu99 -fcompare-debug-second -O1 -o a.out source_file.c",
+			"ApiKey": dg.REXTESTER_API_KEY
 		};
 
 		$.ajax({
