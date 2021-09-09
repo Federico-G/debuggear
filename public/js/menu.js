@@ -422,6 +422,52 @@ dg.menu = {
 		}
 	},
 
+	generarAgregarZoom: function() {
+
+
+		var $todo = $(`<div id="change_zoom" class="dropleft drophidden" style='display: inline-block'>
+      <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownZoom" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <i class="fa fa-cog"></i>
+      </button>
+      <div class="dropdown-menu text-center dropdown-menu-right p-3" style="min-width: 250px; max-width: 400px;">
+
+        <h3>Zoom</h3>
+        <div class='row no-gutters' style='align-items: center;'>
+          <div class='col col-auto pr-2'>
+            <i class="fa fa-font h5"></i>
+          </div>
+          <div class='col'>
+            <input type="range" value="` + dg.config.fontSize + `" min="10" max="60" step="5" class="custom-range d-inline-block" id="fontRange" oninput="dg.menu.cambiarTamañoFuente(this.value);">
+          </div>
+          <div class='col col-auto pl-2'>
+            <i class="fa fa-font h2"></i>
+          </div>
+        </div>
+        
+        <div class='row no-gutters mt-3' style='align-items: center;'>
+          <div class='col col-auto pr-2'>
+            <i class="fa fa-square-o h5"></i>
+          </div>
+          <div class='col'>
+            <input type="range" value="` + Math.log2(dg.config.scale * 10) + `" ` + (dg.config.autoScale ? "disabled " : "") + `min="1" max="5" step="0.125" class="custom-range d-inline-block" id="shapeRange" oninput="dg.menu.cambiarZoom(this.value);">
+          </div>
+          <div class='col col-auto pl-2'>
+            <i class="fa fa-square-o h2"></i>
+          </div>
+        </div>
+        <div class="custom-control custom-switch">
+          <input type="checkbox" ` + (dg.config.autoScale ? "checked " : "") + `class="custom-control-input" id="automaticShapeZoom" oninput="dg.menu.cambiarZoomAutomatico(this.checked);">
+          <label class="custom-control-label" for="automaticShapeZoom">Automático</label>
+        </div>
+        
+      </div>
+    </div>`);
+
+		$("#buttons").append($todo).find('#change_zoom .dropdown-menu').click(function(e) {
+			e.stopPropagation();
+		});
+	},
+
 	generarCrear: function() {
 		document.getElementById('intro').innerHTML = '<h1>¡Nuevo!</h1><br>Elija una opción debajo para comenzar';
 	},
@@ -551,5 +597,25 @@ dg.menu = {
 			localStorage.setItem("functions", JSON.stringify(functions));
 			dg.step.check();
 		}
+	},
+
+	cambiarTamañoFuente: function(value) {
+		dg.config.fontSize = value;
+	},
+
+	cambiarZoom: function(value) {
+		$("#automaticShapeZoom").val(false);
+		dg.config.scale = 0.1 * Math.pow(2, value);
+	},
+
+	cambiarZoomAutomatico: function(value) {
+		dg.config.autoScale = value;
+		if (value) {
+			dg.config.width = 1000;
+		}
+		$(window).trigger("resize");
+		$("#shapeRange").prop("disabled", value);
+		$("#shapeRange").val(Math.log2(dg.config.scale * 10));
 	}
+	
 }

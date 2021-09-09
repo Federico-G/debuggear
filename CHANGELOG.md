@@ -19,3 +19,6 @@
 - Se agrega analytics al proyecto
 - Se agrega la posibilidad de subir diagrama con sus formas para ayudar a mejorar la detección de formas
 - Se agregan funciones de procesamiento al repositorio
+
+## 1.1.0
+TODO
