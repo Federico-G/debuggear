@@ -1,5 +1,7 @@
 dg.menu = {
 	clean: function() {
+		$(window).trigger('clean');
+
 		document.getElementById('intro').innerHTML = '';
 		document.getElementById("buttons").innerHTML = '';
 		document.getElementById("shape-container").innerHTML = '';
@@ -10,6 +12,7 @@ dg.menu = {
 		$(".popover").remove();
 		interact('.shape').unset();
 		delete dg.code.pg;
+		$(window).off('clean', dg.menu.saveDiagram);
 		window.removeEventListener('beforeunload', dg.menu.saveDiagram);
 	},
 
@@ -431,7 +434,7 @@ dg.menu = {
       </button>
       <div class="dropdown-menu text-center dropdown-menu-right p-3" style="min-width: 250px; max-width: 400px;">
 
-        <h3>Zoom</h3>
+        <h4>Zoom</h4>
         <div class='row no-gutters' style='align-items: center;'>
           <div class='col col-auto pr-2'>
             <i class="fa fa-font h5"></i>

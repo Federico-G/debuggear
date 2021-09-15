@@ -58,11 +58,11 @@ dg.step = {
 
 	// new
 	_screen1: function() {
+		localStorage.setItem("screen", "main");
+		dg.menu.clean();
 		localStorage.removeItem("diagram");
 		localStorage.removeItem("currentImage");
 		localStorage.removeItem("code");
-		localStorage.setItem("screen", "main");
-		dg.menu.clean();
 		dg.menu.generarFooter(["scan_photo", "scan_image", "import_diagram", "from_scratch"]);
 		dg.menu.generarCrear();
 	},
@@ -88,6 +88,7 @@ dg.step = {
 		dg.menu.generarAgregarShapeTrash();
 		dg.menu.generarAgregarZoom();
 		window.addEventListener('beforeunload', dg.menu.saveDiagram);
+		$(window).on('clean', dg.menu.saveDiagram);
 		init_interact();
 	},
 
