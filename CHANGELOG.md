@@ -31,3 +31,7 @@
 - Se mejora escala y se agrega la imagen en la consideración de escalas
 - Se corrige posición de texto en if para soportar distintos tamaños de fuente
 
+
+## 1.1.2
+- Se agrega la capacidad de crear tablas y ejecutar consultas en SQL sin la necesidad de cargar imágenes
+

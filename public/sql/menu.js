@@ -158,7 +158,8 @@ dg.menu = {
 		}
 
 		var HTML = [
-			"<h1>Tablas</h1><br>",
+			"<h1>Tablas</h1>",
+			"<button class='btn btn-primary my-2' onclick='dg.menu.crearTablaVacia();' style='width: fit-content;'><i class='fa fa-plus'></i> Tabla vacia</button>",
 			"<table class='table table-striped table-bordered table-sm' style='font-size: 18px;'>",
 			"<thead><tr><th>Tabla</th><th>Opciones</th></thead><tbody>"
 		];
@@ -174,13 +175,21 @@ dg.menu = {
 				"<button class='btn btn-sm btn-danger' onclick='dg.menu.borrarTabla(\"" + table + "\");' title='Borrar'>",
 				"<i class='fa fa-trash'></i></button> ",
 				"<button class='btn btn-sm btn-info' onclick='dg.menu.exportarTabla(\"" + table + "\");' title='Exportar'>",
-				"<i class='fa fa-share-square-o'></i></button>",
+				"<i class='fa fa-share-square-o'></i></button> ",
+				"<button class='btn btn-sm btn-warning' onclick='dg.menu.consultarTabla(\"" + table + "\");' title='Exportar'>",
+				"<i class='fa fa-terminal'></i></button>",
 				"</td>",
 				"</tr>"
 			);
 		}
 		HTML.push("</tbody></table>");
 		$('#intro').html(HTML.join(""));
+	},
+
+	crearTablaVacia: function() {
+		localStorage.setItem("sql-table", "{\"name\": \"\", \"fields\": []}");
+		localStorage.setItem("sql-screen", "generateTable");
+		dg.step.check();
 	},
 
 	verTabla: function(name) {
@@ -202,6 +211,12 @@ dg.menu = {
 			localStorage.setItem("sql-tables", JSON.stringify(tables));
 			dg.step.check();
 		}
+	},
+
+	consultarTabla: function(name) {
+		localStorage.setItem("sql-statement", "SELECT *\nFROM " + name + "\n");
+		localStorage.setItem("sql-screen", "executeSQL");
+		dg.step.check();
 	},
 
 	exportarTabla: function(name) {
