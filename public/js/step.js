@@ -135,7 +135,8 @@ dg.step = {
 			};
 		});
 
-		var relation = img.width / dg.config.width;
+		// var relation = img.width / dg.config.width;
+		var relation = img.width / 1000;
 
 		$.ajax({
 			url: "https://us-central1-debuggear-web.cloudfunctions.net/recognizeText",

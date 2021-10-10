@@ -89,6 +89,10 @@ footer a:hover {
   z-index: 1;
 }
 
+#diagram-bg-image {
+  transform-origin: 0 0;
+}
+
 #diagram-bg-image > img {
   opacity: 0.8;
 }
@@ -233,7 +237,8 @@ footer a:hover {
 
 .shape-if {
   align-items: flex-start;
-  padding-top: 90px;
+  padding-top: var(--font-size);
+  padding-top: calc(var(--font-size) + 10px);
   z-index: 90;
 }
 

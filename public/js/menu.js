@@ -54,7 +54,7 @@ dg.menu = {
 					file.accept = "image/*";
 					file.capture = "environment";
 					file.addEventListener('change', function(e) {
-						document.getElementById('intro').innerHTML = "<div style='background: #FFF; height: 100%; text-align: center;'><img src='image/black-icon.svg' style='width: 50%; z-index: 1000;' class='animacion_infinito_rotacion' /></div>";
+						document.getElementById('intro').innerHTML = "<div style='background: #FFF; height: 100%; text-align: center;'><img src='image/black-icon.svg' style='width: 50%; z-index: 1000; max-height: 50vh; margin-top: 10vh;' class='animacion_infinito_rotacion' /></div>";
 						var tgt = e.target,
 							image = tgt.files[0];
 						if (!FileReader) {
@@ -609,6 +609,7 @@ dg.menu = {
 	cambiarZoom: function(value) {
 		$("#automaticShapeZoom").val(false);
 		dg.config.scale = 0.1 * Math.pow(2, value);
+		$(window).trigger("resize");
 	},
 
 	cambiarZoomAutomatico: function(value) {
