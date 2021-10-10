@@ -1,5 +1,7 @@
 dg.menu = {
 	clean: function() {
+		$(window).trigger('clean');
+
 		document.getElementById('intro').innerHTML = '';
 		document.getElementById("buttons").innerHTML = '';
 		document.getElementById("shape-container").innerHTML = '';
@@ -10,6 +12,7 @@ dg.menu = {
 		$(".popover").remove();
 		interact('.shape').unset();
 		delete dg.code.pg;
+		$(window).off('clean', dg.menu.saveDiagram);
 		window.removeEventListener('beforeunload', dg.menu.saveDiagram);
 	},
 
@@ -51,7 +54,7 @@ dg.menu = {
 					file.accept = "image/*";
 					file.capture = "environment";
 					file.addEventListener('change', function(e) {
-						document.getElementById('intro').innerHTML = "<div style='background: #FFF; height: 100%; text-align: center;'><img src='image/black-icon.svg' style='width: 50%; z-index: 1000;' class='animacion_infinito_rotacion' /></div>";
+						document.getElementById('intro').innerHTML = "<div style='background: #FFF; height: 100%; text-align: center;'><img src='image/black-icon.svg' style='width: 50%; z-index: 1000; max-height: 50vh; margin-top: 10vh;' class='animacion_infinito_rotacion' /></div>";
 						var tgt = e.target,
 							image = tgt.files[0];
 						if (!FileReader) {
@@ -431,7 +434,7 @@ dg.menu = {
       </button>
       <div class="dropdown-menu text-center dropdown-menu-right p-3" style="min-width: 250px; max-width: 400px;">
 
-        <h3>Zoom</h3>
+        <h4>Zoom</h4>
         <div class='row no-gutters' style='align-items: center;'>
           <div class='col col-auto pr-2'>
             <i class="fa fa-font h5"></i>
@@ -606,6 +609,7 @@ dg.menu = {
 	cambiarZoom: function(value) {
 		$("#automaticShapeZoom").val(false);
 		dg.config.scale = 0.1 * Math.pow(2, value);
+		$(window).trigger("resize");
 	},
 
 	cambiarZoomAutomatico: function(value) {

@@ -1,5 +1,5 @@
 window.dg = {
-	version: "v1.1.0",
+	version: "v1.1.1",
 	config: {
 		width: 1000,
 		autoScale: true,
@@ -77,6 +77,7 @@ $(function() {
 		} else {
 			dg.config.width = document.getElementById("main").clientWidth / dg.config.scale;
 			document.getElementById("shape-container").style.width = dg.config.width + "px";
+			document.getElementById("diagram-bg-image").style.transform = "scale(" + (1000 / dg.config.width) + ")";
 		}
 		// TODO cambiar de lugar
 		$("#shapeRange").val(Math.log2(dg.config.scale * 10));

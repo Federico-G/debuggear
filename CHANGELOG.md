@@ -24,3 +24,10 @@
 ## 1.1.0
 - Se agrega la capacidad de cambiar el tamaño de letra y de desactivar el ajuste automático de escala, junto con la capacidad de elegirlo manualmente
 - Se agrega api_key para compilador de C
+- Se agrega evento de guardado de diagrama en los cambios de menú internos
+
+
+## 1.1.1
+- Se mejora escala y se agrega la imagen en la consideración de escalas
+- Se corrige posición de texto en if para soportar distintos tamaños de fuente
+
