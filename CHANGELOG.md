@@ -19,3 +19,8 @@
 - Se agrega analytics al proyecto
 - Se agrega la posibilidad de subir diagrama con sus formas para ayudar a mejorar la detección de formas
 - Se agregan funciones de procesamiento al repositorio
+
+
+## 1.1.0
+- Se agrega la capacidad de cambiar el tamaño de letra y de desactivar el ajuste automático de escala, junto con la capacidad de elegirlo manualmente
+- Se agrega api_key para compilador de C

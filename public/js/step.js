@@ -86,6 +86,7 @@ dg.step = {
 		dg.shape.generateSVG();
 		dg.menu.generarAgregarShape();
 		dg.menu.generarAgregarShapeTrash();
+		dg.menu.generarAgregarZoom();
 		window.addEventListener('beforeunload', dg.menu.saveDiagram);
 		init_interact();
 	},

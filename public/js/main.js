@@ -1,7 +1,8 @@
 window.dg = {
-	version: "v1.0.2",
+	version: "v1.1.0",
 	config: {
 		width: 1000,
+		autoScale: true,
 		_fontSize: 0,
 		_scale: 1,
 		set fontSize(size) {
@@ -68,10 +69,22 @@ function addInstall() {
 
 $(function() {
 	addInstall();
-	dg.config.scale = document.getElementById("main").clientWidth / dg.config.width;
-	$(window).on("resize", function() {
-		dg.config.scale = document.getElementById("main").clientWidth / dg.config.width;
-	});
+
+	function autoScale() {
+		if (dg.config.autoScale) {
+			dg.config.scale = document.getElementById("main").clientWidth / dg.config.width;
+			document.getElementById("shape-container").style.width = "";
+		} else {
+			dg.config.width = document.getElementById("main").clientWidth / dg.config.scale;
+			document.getElementById("shape-container").style.width = dg.config.width + "px";
+		}
+		// TODO cambiar de lugar
+		$("#shapeRange").val(Math.log2(dg.config.scale * 10));
+	}
+
+	$(window).on("resize", autoScale);
+	autoScale();
+
 	document.getElementById("version").innerHTML = dg.version;
 	dg.step.check();
 });

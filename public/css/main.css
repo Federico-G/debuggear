@@ -124,6 +124,7 @@ footer a:hover {
 
 /* EDIT */
 
+.drophidden .dropdown-toggle::before,
 .drophidden .dropdown-toggle::after {
   content: none;
 }
@@ -145,6 +146,20 @@ footer a:hover {
   resize: none;
   overflow: hidden;
   font-family: monospace;
+}
+
+#change_zoom {
+  position: absolute;
+  right: 25px;
+  top: 105px;
+  z-index: 1001;
+}
+
+#change_zoom > button {
+  border-radius: 40px;
+  width: 40px;
+  height: 40px;
+  outline: 0;
 }
 
 #add_shape {
