@@ -11,7 +11,7 @@
 		if (worker) return workerInitPromise;
 
 		try {
-			worker = new Worker('/js/language/c/wcc-worker.js');
+			worker = new Worker('js/language/c/wcc-worker.js');
 		} catch (e) {
 			// Workers don't work on file:// protocol
 			workerInitPromise = Promise.reject(

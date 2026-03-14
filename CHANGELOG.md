@@ -43,6 +43,9 @@
 - Se reescribe el Service Worker: estrategia network-first con cache dinámico para same-origin
 - Se agrega precache completo al instalar la PWA (click en "Instalar")
 
+### Infraestructura
+- Se agrega GitHub Action para deploy automático a Pages en cada release
+
 ### Otros
 - Se elimina la sección "nosotros" de la aplicación
 - Se corrige la ejecución async de nextStep (se elimina el hack de setTimeout)

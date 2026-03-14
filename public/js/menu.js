@@ -473,11 +473,11 @@ dg.menu = {
 
 		html += "<h2 class='my-2'>¿Qué tipo de diagramas puedo cargar?</h2>";
 		html += "<p>Para algoritmos se pueden cargar los diagramas de programación de la materia elementos de programación. A continuación, algunos ejemplos:</p>";
-		html += "<img src='/image/algo1.jpg' style='width: 100%; max-width: 300px;' /><br><br>";
-		html += "<img src='/image/algo2.jpg' style='width: 100%; max-width: 300px;' /><br><br>";
+		html += "<img src='image/algo1.jpg' style='width: 100%; max-width: 300px;' /><br><br>";
+		html += "<img src='image/algo2.jpg' style='width: 100%; max-width: 300px;' /><br><br>";
 		html += "<p>Para SQL deben subirse diagramas básicos DER con el formato: </p>";
-		html += "<img src='/image/der1.jpg' style='width: 100%; max-width: 300px;' /><br><br>";
-		html += "<img src='/image/der2.jpg' style='width: 100%; max-width: 300px;' /><br><br>";
+		html += "<img src='image/der1.jpg' style='width: 100%; max-width: 300px;' /><br><br>";
+		html += "<img src='image/der2.jpg' style='width: 100%; max-width: 300px;' /><br><br>";
 
 		html += "<h2 class='my-2'>¿Cómo puedo cargar mi diagrama?</h2>";
 		html += "<p>Los diagramas, ya sean algoritmos o DER, pueden obtenerse tomando una foto o bien seleccionando un archivo en el dispositivo donde se esté ejecutando la web.</p>";

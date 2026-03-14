@@ -11,7 +11,7 @@
 //   - wcc-memfs.js: In-memory virtual filesystem
 //   - wcc-wasi.js:  WASI Preview 1 implementation
 
-importScripts('/js/language/c/wcc-memfs.js', '/js/language/c/wcc-wasi.js');
+importScripts('wcc-memfs.js', 'wcc-wasi.js');
 
 // ==================== Bundle Reader ====================
 // Format: [count:u32] per file: [pathLen:u32][path:utf8][dataLen:u32][data:bytes]
@@ -40,7 +40,7 @@ var compilerModule = null;  // Pre-compiled WebAssembly.Module for cc.wasm
 var baseFs = null;          // Base FS with compiler files (cloned per run)
 
 async function initialize() {
-	var resp = await fetch('/js/language/c/wccfiles.bin');
+	var resp = await fetch('wccfiles.bin');
 	var buffer = await resp.arrayBuffer();
 	var files = unpackBundle(buffer);
 

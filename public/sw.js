@@ -2,10 +2,11 @@ var CACHE_VERSION = 'v1.2.1';
 var CACHE_NAME = 'debuggear-' + CACHE_VERSION;
 
 // Precached on SW install — just the entry points.
+// Paths are relative to sw.js location (root of public/).
 var PRECACHE = [
-	'/',
-	'/index.html',
-	'/sql.html'
+	'./',
+	'index.html',
+	'sql.html'
 ];
 
 // Precached when user clicks "Instalar" — everything needed for full offline.
@@ -14,95 +15,95 @@ var PRECACHE = [
 // guarantees nothing is missed.
 var LAZY_PRECACHE = [
 	// HTML
-	'/index.html',
-	'/sql.html',
+	'index.html',
+	'sql.html',
 
 	// CSS
-	'/css/bootstrap.min.css',
-	'/css/font-awesome.min.css',
-	'/css/main.css',
+	'css/bootstrap.min.css',
+	'css/font-awesome.min.css',
+	'css/main.css',
 
 	// Vendor JS
-	'/js/jquery.min.js',
-	'/js/lodash.min.js',
-	'/js/bootstrap.bundle.min.js',
-	'/js/interact.min.js',
-	'/js/compressor.min.js',
-	'/js/nearley.js',
-	'/js/tf.min.js',
-	'/js/tf-automl.min.js',
-	'/tf.js',
+	'js/jquery.min.js',
+	'js/lodash.min.js',
+	'js/bootstrap.bundle.min.js',
+	'js/interact.min.js',
+	'js/compressor.min.js',
+	'js/nearley.js',
+	'js/tf.min.js',
+	'js/tf-automl.min.js',
+	'tf.js',
 
 	// App JS
-	'/js/main.js',
-	'/js/interact-init.js',
-	'/js/shape.js',
-	'/js/menu.js',
-	'/js/step.js',
-	'/js/code/Console.js',
-	'/js/code/Node.js',
-	'/js/code/Step.js',
-	'/js/code/Symbol.js',
-	'/js/code/SymbolTable.js',
-	'/js/code/Tree.js',
+	'js/main.js',
+	'js/interact-init.js',
+	'js/shape.js',
+	'js/menu.js',
+	'js/step.js',
+	'js/code/Console.js',
+	'js/code/Node.js',
+	'js/code/Step.js',
+	'js/code/Symbol.js',
+	'js/code/SymbolTable.js',
+	'js/code/Tree.js',
 
 	// C language
-	'/js/language/c/bnf.js',
-	'/js/language/c/solver.js',
-	'/js/language/c/to-code.js',
-	'/js/language/c/validation.js',
+	'js/language/c/bnf.js',
+	'js/language/c/solver.js',
+	'js/language/c/to-code.js',
+	'js/language/c/validation.js',
 
 	// C compiler (Web Worker — not loaded by script tags)
-	'/js/language/c/wcc-worker.js',
-	'/js/language/c/wcc-memfs.js',
-	'/js/language/c/wcc-wasi.js',
-	'/js/language/c/wccfiles.bin',
+	'js/language/c/wcc-worker.js',
+	'js/language/c/wcc-memfs.js',
+	'js/language/c/wcc-wasi.js',
+	'js/language/c/wccfiles.bin',
 
 	// SQL module
-	'/sql/codemirror.js',
-	'/sql/codemirror-sql.js',
-	'/sql/codemirror.css',
-	'/sql/faker.min.js',
-	'/sql/main.js',
-	'/sql/menu.js',
-	'/sql/step.js',
-	'/sql/types.js',
-	'/sql/sql-wasm.js',
-	'/sql/sql-wasm.wasm',
-	'/sql/worker.sql-wasm.js',
+	'sql/codemirror.js',
+	'sql/codemirror-sql.js',
+	'sql/codemirror.css',
+	'sql/faker.min.js',
+	'sql/main.js',
+	'sql/menu.js',
+	'sql/step.js',
+	'sql/types.js',
+	'sql/sql-wasm.js',
+	'sql/sql-wasm.wasm',
+	'sql/worker.sql-wasm.js',
 
 	// TF model (shape detection)
-	'/model.json',
-	'/dict.txt',
-	'/group1-shard1of5.bin',
-	'/group1-shard2of5.bin',
-	'/group1-shard3of5.bin',
-	'/group1-shard4of5.bin',
-	'/group1-shard5of5.bin',
+	'model.json',
+	'dict.txt',
+	'group1-shard1of5.bin',
+	'group1-shard2of5.bin',
+	'group1-shard3of5.bin',
+	'group1-shard4of5.bin',
+	'group1-shard5of5.bin',
 
 	// Fonts
-	'/fonts/fontawesome-webfont.woff2',
-	'/fonts/fontawesome-webfont.woff',
-	'/fonts/fontawesome-webfont.ttf',
+	'fonts/fontawesome-webfont.woff2',
+	'fonts/fontawesome-webfont.woff',
+	'fonts/fontawesome-webfont.ttf',
 
 	// Images
-	'/image/white-icon.svg',
-	'/image/black-icon.svg',
-	'/image/algo1.jpg',
-	'/image/algo2.jpg',
-	'/image/der1.jpg',
-	'/image/der2.jpg',
+	'image/white-icon.svg',
+	'image/black-icon.svg',
+	'image/algo1.jpg',
+	'image/algo2.jpg',
+	'image/der1.jpg',
+	'image/der2.jpg',
 
 	// PWA assets
-	'/manifest.json',
-	'/favicon.ico',
-	'/favicon-16x16.png',
-	'/favicon-32x32.png',
-	'/apple-touch-icon.png',
-	'/android-chrome-192x192.png',
-	'/android-chrome-512x512.png',
-	'/safari-pinned-tab.svg',
-	'/mstile-150x150.png'
+	'manifest.json',
+	'favicon.ico',
+	'favicon-16x16.png',
+	'favicon-32x32.png',
+	'apple-touch-icon.png',
+	'android-chrome-192x192.png',
+	'android-chrome-512x512.png',
+	'safari-pinned-tab.svg',
+	'mstile-150x150.png'
 ];
 
 // Install: precache entry points, take over immediately

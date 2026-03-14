@@ -1,8 +1,6 @@
 # TODO
 
-## Nice to have
-
-#### UI:
+### UI:
 - Code:
   - Más importancia a la tabla de símbolos:
     - posibilidad de mantenerla siempre abierta
@@ -10,18 +8,26 @@
   - Modal en vez de "prompt()" para stdin
   - Altura del lienzo cambiable según la posición del último elemento (hay que tener en consideración el scale)
 
-#### UX:
+### UX:
 - Borrar elementos con `supr`
 - Poder elegir más de un elemento (para desplazarlo, o borrarlo)
 - Personalizar nombres al exportar archivos
 - pushState para tomar atrás y adelante del history
 - Ajustes de tamaño en todas (?) las pantallas
 
-#### C:
+### C:
 - Archivos
 - Vectores y matrices
 
-#### Features:
+### Features:
 - Guardar online para compartir (ya que pwa no soporta abrir cierto tipo de extensiones aun)
 - Exportar diagrama como imagen
 - Ejecutar todo + breakpoints
+
+### Detección de formas:
+- Reemplazar OCR de Cloud Functions (Google Cloud Vision) por una alternativa local (ej: Tesseract.js)
+- Migrar de TensorFlow.js AutoML (deprecado) a YOLOv8/v11 + ONNX Runtime Web
+  - Re entrenar con las imágenes existentes en `google cloud/vision/training_images/`
+  - Entrenamiento local con Ultralytics (`yolo train`)
+  - ONNX Runtime Web soporta WebGPU con fallback a WASM
+  - Refs: https://github.com/Hyuto/yolov8-onnxruntime-web
