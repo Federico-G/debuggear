@@ -10,17 +10,14 @@ dg.code.Tree.prototype.getMainNode = function() {
 	return this.mainNode;
 }
 
-dg.code.Tree.prototype.nextStep = function() {
+dg.code.Tree.prototype.nextStep = async function() {
 	if (!this.currentNode) {
 		return null;
 	}
 	var previousNode = this.getPreviousNode();
 	this.history.push(new dg.code.Step(this.currentNode, this.currentSymbolTable.clone(), this.currentConsole.clone()));
-	this.currentNode.run(this.currentSymbolTable, this.currentConsole);
-	var that = this;
-	this.currentNode.getNextNode(this.currentSymbolTable, previousNode, this.currentConsole).then(function(result) {
-		that.currentNode = result;
-	});
+	await this.currentNode.run(this.currentSymbolTable, this.currentConsole);
+	this.currentNode = await this.currentNode.getNextNode(this.currentSymbolTable, previousNode, this.currentConsole);
 	return this.currentNode;
 }
 

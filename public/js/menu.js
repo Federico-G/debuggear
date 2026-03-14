@@ -190,6 +190,10 @@ dg.menu = {
 						image: currentImage
 					});
 
+					if (typeof firebase === 'undefined' || !firebase.storage) {
+						alert("No hay conexión. No se pudo subir el algoritmo.");
+						return;
+					}
 					var storageRef = firebase.storage().ref();
 					var fileRef = storageRef.child(Date.now() + ".json");
 					fileRef.putString(file).then(function(snapshot) {
@@ -293,11 +297,12 @@ dg.menu = {
 				button.type = 'button';
 				button.id = 'footer_exe_next';
 				button.innerHTML = "<i class='fa fa-step-forward'></i><br><span>Siguiente</span>";
-				/*
-				button.addEventListener('click', function() {
-					var node = dg.code.pg.nextStep();
+				button.addEventListener('click', async function() {
+					button.disabled = true;
+					var node = await dg.code.pg.nextStep();
+					button.disabled = false;
 					if (!node) {
-						this.disabled = true;
+						button.disabled = true;
 					} else {
 						dg.shape.select(node.getElement());
 					}
@@ -305,25 +310,6 @@ dg.menu = {
 						"<div>" + dg.code.pg.currentConsole.getHTML() + "</div>";
 					document.getElementById("console-container").firstChild.scrollIntoView(false);
 					document.getElementById("footer_exe_prev").disabled = false;
-				});
-				*/
-				button.addEventListener('click', function() {
-					button.disabled = true;
-					var node = dg.code.pg.nextStep();
-					setTimeout(function() {
-						node = dg.code.pg.currentNode;
-						button.disabled = false;
-						if (!node) {
-							this.disabled = true;
-						} else {
-							dg.shape.select(node.getElement());
-						}
-						document.getElementById("console-container").innerHTML =
-							"<div>" + dg.code.pg.currentConsole.getHTML() + "</div>";
-						document.getElementById("console-container").firstChild.scrollIntoView(false);
-						document.getElementById("footer_exe_prev").disabled = false;
-					}, 1500);
-
 				});
 
 				footer.appendChild(button);

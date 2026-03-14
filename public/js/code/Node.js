@@ -122,28 +122,15 @@ dg.code.Node.prototype.getNextNode = async function(symbolTable, prevNode, conso
 		case 'for':
 			var parts = this.expression.split(";");
 
-			var data,
-				prevChainingNode = this.prevNode || this.parentNode;
-			if (prevChainingNode === prevNode) {
-				data = await dg.language.solve("expression", parts[0], symbolTable);
-			} else {
-				data = await dg.language.solve("expression", parts[2], symbolTable);
-			}
-			if (data.error) {
-				console.error(data.error);
-				return null;
-			}
-			// XXX turbio
-			symbolTable.table = data.symbolTable.table;
+			var prevChainingNode = this.prevNode || this.parentNode;
+			var stmt = (prevChainingNode === prevNode) ? parts[0] : parts[2];
 
-
-			data = await dg.language.solve("expression", parts[1], symbolTable);
+			var data = await dg.language.solve("expression", parts[1], symbolTable, stmt);
 			if (data.error) {
 				console.error(data.error);
 				return null;
 			}
 
-			// XXX turbio
 			symbolTable.table = data.symbolTable.table;
 			if (data.result) {
 				if (this.childrenNodes.length) {
