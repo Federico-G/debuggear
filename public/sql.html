@@ -15,7 +15,6 @@
 	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-	<link rel="manifest" href="/site.webmanifest">
 	<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#AC4A87">
 	<meta name="apple-mobile-web-app-title" content="Debuggear">
 	<meta name="application-name" content="Debuggear">
@@ -95,18 +94,20 @@
 	<script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-analytics.js"></script>
 
 	<script>
-		var firebaseConfig = {
-			apiKey: "AIzaSyCpNJVR9zpPRCkrM8iJhDoRwUJlaTAOYd0",
-			authDomain: "debuggear-web.firebaseapp.com",
-			databaseURL: "https://debuggear-web.firebaseio.com",
-			projectId: "debuggear-web",
-			storageBucket: "debuggear-web.appspot.com",
-			messagingSenderId: "438583620617",
-			appId: "1:438583620617:web:958abed00c1c0a3c54f4d8",
-			measurementId: "G-8E05GKE4M2"
-		};
-		firebase.initializeApp(firebaseConfig);
-		firebase.analytics();
+		if (typeof firebase !== 'undefined') {
+			var firebaseConfig = {
+				apiKey: "AIzaSyCpNJVR9zpPRCkrM8iJhDoRwUJlaTAOYd0",
+				authDomain: "debuggear-web.firebaseapp.com",
+				databaseURL: "https://debuggear-web.firebaseio.com",
+				projectId: "debuggear-web",
+				storageBucket: "debuggear-web.appspot.com",
+				messagingSenderId: "438583620617",
+				appId: "1:438583620617:web:958abed00c1c0a3c54f4d8",
+				measurementId: "G-8E05GKE4M2"
+			};
+			firebase.initializeApp(firebaseConfig);
+			firebase.analytics();
+		}
 	</script>
 
 	<!-- user -->

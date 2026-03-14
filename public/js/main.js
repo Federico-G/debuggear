@@ -1,5 +1,5 @@
 window.dg = {
-	version: "v1.1.1",
+	version: "v1.2.1",
 	config: {
 		width: 1000,
 		autoScale: true,
@@ -58,6 +58,10 @@ function addInstall() {
 		deferredPrompt.userChoice.then(choiceResult => {
 			if (choiceResult.outcome === 'accepted') {
 				li.style.display = 'none';
+				// Tell the SW to cache all resources for full offline support
+				if (navigator.serviceWorker.controller) {
+					navigator.serviceWorker.controller.postMessage({ action: 'precache-lazy' });
+				}
 			}
 			deferredPrompt = null;
 		});
@@ -89,22 +93,3 @@ $(function() {
 	document.getElementById("version").innerHTML = dg.version;
 	dg.step.check();
 });
-
-
-// XXX mov
-// Polyfill for array flat
-if (!Array.prototype.flat) {
-	Array.prototype.flat = function(depth) {
-		var flattend = [];
-		(function flat(array, depth) {
-			for (let el of array) {
-				if (Array.isArray(el) && depth > 0) {
-					flat(el, depth - 1);
-				} else {
-					flattend.push(el);
-				}
-			}
-		})(this, Math.floor(depth) || 1);
-		return flattend;
-	};
-}
