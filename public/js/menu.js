@@ -475,30 +475,6 @@ dg.menu = {
 		document.getElementById('intro').innerHTML = '<h1>¡Nuevo!</h1><br>Elija una opción debajo para comenzar';
 	},
 
-	generarInfo: function() {
-		var html = "<h1 class='mb-3'>Información</h1>";
-
-		html += "<div style='font-size: 20px;'>";
-
-		html += "<p>Bienvenidos/as a Debuggear, una web para ayudarte en la resolución de ejercicios de diagramas de programación y bases de datos con una interfaz amigable, intuitiva y simple! </p>";
-		html += "<p>Con Debuggear podrás validar, ejecutar y probar tus algoritmos y queries fácilmente paso a paso. Esto te permitirá aprender el funcionamiento de los algoritmos y sentencias fácilmente.</p>";
-		html += "<p>La idea es poder brindar una alternativa interactiva para poder comprender aquellos conceptos que normalmente suelen ser complicados debido a su naturaleza abstracta.</p>";
-
-		html += "<h2 class='my-2'>¿Quiénes somos?</h2>";
-		html += "<p>Somos un equipo compuesto por cuatro estudiantes de ingeniería en informática. Debuggear nació como nuestro proyecto final de carrera</p>";
-		html += "<div class='row'>";
-		html += "<div class='col-6 my-2'><img src='/image/fede.jpg' width='150' height='170' /><div>Federico Gasior</div></div>";
-		html += "<div class='col-6 my-2'><img src='/image/flor.jpg' width='150' height='170' /><div>Florencia Kaucic</div></div>";
-		html += "<div class='col-6 my-2'><img src='/image/lu.jpg' width='150' height='170' /><div>Lucia Corleto</div></div>";
-		html += "<div class='col-6 my-2'><img src='/image/diego.jpg' width='150' height='170' /><div>Diego Porro</div></div>";
-		html += "</div>";
-
-		html += "<p class='mt-3'>Para comenzar a escanear acceda a la sección <a href='#' onclick='dg.step.screenMain(); return false;'>Diagrama</a></p>"
-		html += "</div>";
-
-		document.getElementById('intro').innerHTML = html;
-	},
-
 	generarHelp: function() {
 		var html = "<h1 class='mb-3'>Ayuda</h1>";
 

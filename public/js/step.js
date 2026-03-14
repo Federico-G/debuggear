@@ -11,8 +11,6 @@ dg.step = {
 			} else {
 				dg.step.screenInfo();
 			}
-		} else if (screen === "info") {
-			dg.step.screenInfo();
 		} else if (screen === "help") {
 			dg.step.screenHelp();
 		} else if (screen === "functions") {
@@ -20,14 +18,6 @@ dg.step = {
 		} else if (screen === "main") {
 			dg.step.screenMain();
 		}
-	},
-
-	// info
-	screenInfo: function() {
-		localStorage.setItem("screen", "info");
-		dg.menu.clean();
-		dg.menu.generarFooter();
-		dg.menu.generarInfo();
 	},
 
 	screenHelp: function() {
