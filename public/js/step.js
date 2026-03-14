@@ -9,7 +9,7 @@ dg.step = {
 			} else if (diagram) {
 				dg.step._screen2();
 			} else {
-				dg.step.screenInfo();
+				dg.step.screenMain();
 			}
 		} else if (screen === "help") {
 			dg.step.screenHelp();
@@ -83,6 +83,7 @@ dg.step = {
 	},
 
 	_screen3: function() {
+		dg.language.warmup();
 		localStorage.setItem("screen", "main");
 		dg.menu.clean();
 		document.getElementById("shape-container").style.display = 'block';
